@@ -8,5 +8,10 @@ url: "http://gumpcha.github.io" # the base hostname & protocol for your site
 twitter_username: gumpcha
 github_username:  gumpcha
 
+# Outputting
+permalink: /blog/:title
+
 # Build settings
 markdown: redcarpet
+redcarpet:
+  extensions: ["autolink"]
