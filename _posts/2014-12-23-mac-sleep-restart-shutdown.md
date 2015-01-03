@@ -1,6 +1,7 @@
 ---
 layout: post
 title: 맥(Mac) 잠자기/재기동/종료 방법 총정리
+comments: true
 ---
 
 크게 다음 네 가지 방법이 가능하다.
