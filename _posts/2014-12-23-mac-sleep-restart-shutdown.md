@@ -13,9 +13,9 @@ comments: true
 
 ## 시스템 메뉴
 
-- sleep:  -> Sleep
-- restart:  -> Restart
-- shutdown:  -> Shut Down
+- sleep: {% icon fa-apple %} -> Sleep
+- restart: {% icon fa-apple %} -> Restart
+- shutdown: {% icon fa-apple %} -> Shut Down
 
 
 ## 전역 단축키
