@@ -6,9 +6,101 @@
 </description>
     <link>http://gumpcha.github.io/</link>
     <atom:link href="http://gumpcha.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 12 Jan 2015 10:28:32 +0900</pubDate>
-    <lastBuildDate>Mon, 12 Jan 2015 10:28:32 +0900</lastBuildDate>
+    <pubDate>Sat, 24 Jan 2015 00:35:37 +0900</pubDate>
+    <lastBuildDate>Sat, 24 Jan 2015 00:35:37 +0900</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
+    
+      <item>
+        <title>Github Pages에 Jekyll custom plugin 적용하기</title>
+        <description>&lt;h2&gt;TL;DR&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://pages.github.com/versions/&quot;&gt;Github Pages에서 지원하는 Jekyll plugin&lt;/a&gt;외의 것을 쓰려면
+최종 html/css/js 파일이 들어가는 &lt;code&gt;_site&lt;/code&gt; 디렉토리를 &lt;code&gt;master&lt;/code&gt; branch로 변경한다.&lt;/p&gt;
+
+&lt;h2&gt;히스토리&lt;/h2&gt;
+
+&lt;p&gt;다음 내용은 &lt;a href=&quot;https://github.com/gumpcha/gumpcha.github.io/issues/2&quot;&gt;블로그 이슈&lt;/a&gt;에서 진행된 내용을 정리했다.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://gumpcha.github.io/blog/mac-sleep-restart-shutdown/&quot;&gt;두 번째 블로그&lt;/a&gt; 글을 올리고 혹시나 해서 윈도우에서 확인해 보니, 애플 아이콘이 깨져서 안 보인다. 검색해 보니 unicode 문제라고 하고, 웹에 게시할 때는 쓰지 말라고 해서 &lt;code&gt;font-awesome&lt;/code&gt;의 애플 아이콘을 적용하면 되겠다 싶었다.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://ryancmorrissey.com/blog/2014/01/25/font-awesome-icons-jekyll-tag-plugin/&quot;&gt;Font Awesome icons Jekyll tag plugin&lt;/a&gt;을 설치하고 다음과 같이 수정했다.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;-- sleep: &amp;lt;U+F8FF&amp;gt; -&amp;gt; Sleep
+-- restart: &amp;lt;U+F8FF&amp;gt; -&amp;gt; Restart
+-- shutdown: &amp;lt;U+F8FF&amp;gt; -&amp;gt; Shut Down
++- sleep: &amp;lt;i class=&amp;quot;fa fa-apple&amp;quot;&amp;gt;&amp;lt;/i&amp;gt; -&amp;gt; Sleep
++- restart: &amp;lt;i class=&amp;quot;fa fa-apple&amp;quot;&amp;gt;&amp;lt;/i&amp;gt; -&amp;gt; Restart
++- shutdown: &amp;lt;i class=&amp;quot;fa fa-apple&amp;quot;&amp;gt;&amp;lt;/i&amp;gt; -&amp;gt; Shut Down
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;local에서 확인하니 잘 나와서 &lt;code&gt;push&lt;/code&gt;를 했는데 github에서 메일이 한 통 날라온다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The page build failed with the following error:&lt;/p&gt;
+
+&lt;p&gt;The tag &lt;code&gt;icon&lt;/code&gt; in &lt;code&gt;_posts/2014-12-23-mac-sleep-restart-shutdown.md&lt;/code&gt; is not a recognized Liquid tag. For more information, see &lt;a href=&quot;https://help.github.com/articles/page-build-failed-unknown-tag-error&quot;&gt;https://help.github.com/articles/page-build-failed-unknown-tag-error&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;github pages는 새로 push가 되면 보안 문제 때문에 &lt;code&gt;--safe&lt;/code&gt; 모드로 jekyll processing을 하기 때문에 github가 제공하는 plugin이 아니면 liquid tag를 인식하지 못 하는 문제이다.&lt;/p&gt;
+
+&lt;p&gt;해결 방법을 말로 설명하면, 로컬에서 &lt;code&gt;jekyll build&lt;/code&gt;나 &lt;code&gt;jekyll serve&lt;/code&gt;를 해서 &lt;code&gt;_site&lt;/code&gt; 디렉토리에 최종 html/css/js 파일을 생성한 다음 push를 해야 되는 상황.&lt;/p&gt;
+
+&lt;p&gt;기술적인 해결법은 sources 브랜치에서 편집/작성한 글을 _site 디렉토리에 생성한 다음 _site 디렉토리를 master 브랜치로 설정하면 된다.&lt;/p&gt;
+
+&lt;h2&gt;사전 작업&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;.gitignore&lt;/code&gt;에서 _site 삭제하고 _site 전체를 &lt;code&gt;git add&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;master&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;vi .gitignore
+... delete _site
+&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;master&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git add .gitignore _site
+&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;master&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git ci -m &lt;span class=&quot;s1&quot;&gt;&amp;#39;Prepare source/master branch for custom jekyll plugin&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;source branch를 생성하고 기존의 master와 함께 push&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;master&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git checkout -b &lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git push --all
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;웹으로 github 저장소 &lt;code&gt;Settings&lt;/code&gt; 메뉴로 들어가 Default branch를 source로 변경&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;local에서 remote 저장소의 default branch 적용&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git remote &lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt;-head origin -a
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;local/remote의 master branch 모두 삭제&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git push origin :master
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git branch -d master
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2&gt;최종 Workflow&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;source&lt;/code&gt; branch에서 새 글을 작성하거나, 사이트 내용 변경&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;jekyll serve&lt;/code&gt;로 내용 확인&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;추가/변경된 내용 commit&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git commit -am &lt;span class=&quot;s1&quot;&gt;&amp;#39;Add new post&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;_site를 master branch로 재적용. 사전 준비가 끝나고 나서 처음 push할 때는 local에 master가 없으므로 &lt;code&gt;git branch -d master&lt;/code&gt;는 건너뜀&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git branch -D master
+&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git checkout -b master
+&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;master&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git filter-branch --subdirectory-filter _site/ -f
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;source/master branch 모두 push&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;master&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git push --all
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;위 Workflow에서 사용하는 여러 명령어들은 git alias나 &lt;a href=&quot;https://github.com/gumpcha/gumpcha.github.io/commit/b487e1bc507981f3b1af210463031cd678bacc4e&quot;&gt;간단한 쉘 스크립트&lt;/a&gt;, &lt;a href=&quot;http://james-oldfield.co/blog/jekyll-plugins-with-gh-pages/&quot;&gt;grunt task&lt;/a&gt;, travis-ci 등을 이용해 한 번에 적용할 수 있다.&lt;/p&gt;
+
+&lt;h2&gt;참고&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://davidensinger.com/2013/04/deploying-jekyll-to-github-pages/&quot;&gt;http://davidensinger.com/2013/04/deploying-jekyll-to-github-pages/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://drewsilcock.co.uk/custom-jekyll-plugins/&quot;&gt;http://drewsilcock.co.uk/custom-jekyll-plugins/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Wed, 21 Jan 2015 00:00:00 +0900</pubDate>
+        <link>http://gumpcha.github.io/blog/github-pages-with-jekyll-custom-plugin</link>
+        <guid isPermaLink="true">http://gumpcha.github.io/blog/github-pages-with-jekyll-custom-plugin</guid>
+        
+        
+      </item>
     
       <item>
         <title>맥(Mac) 잠자기/재기동/종료 방법 총정리</title>
