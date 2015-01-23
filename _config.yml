@@ -15,3 +15,5 @@ permalink: /blog/:title
 markdown: redcarpet
 redcarpet:
   extensions: ["autolink"]
+
+exclude: [publish.sh]
