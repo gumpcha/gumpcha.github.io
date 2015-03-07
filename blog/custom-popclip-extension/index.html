@@ -63,7 +63,7 @@
 
 <p>마우스로 선택한 텍스트들을 <code>-</code>로 시작하는 목록으로 변경해 클립보드에 복사해 놓는 <a href="https://github.com/gumpcha/my-popclip-extensions/tree/master/HyphenList.popclipext"><strong>HyphenList</strong></a>라는 extension을 만드는 과정을 설명한다.</p>
 
-<h1>1. 템플릿 준비 - <a href="https://github.com/gumpcha/my-popclip-extensions/commit/1be4d61a2b1f5ae92e66564bc365d54a930c9464">관련 커밋</a></h1>
+<h2>1. 템플릿 준비 - <a href="https://github.com/gumpcha/my-popclip-extensions/commit/1be4d61a2b1f5ae92e66564bc365d54a930c9464">관련 커밋</a></h2>
 
 <p><a href="https://github.com/pilotmoon/PopClip-Extensions#general-overview">공식 문서의 General Overview 섹션</a>을 보면 PopClip extension은 다섯 가지 타입의 Action이 가능하다.</p>
 
@@ -82,7 +82,7 @@
 <p>개인 extension은 디지털 서명 문제 때문에 설치할 때, 설치 여부를 확인하는 창이 계속 뜨는데 이 확인 절차를 건너뛰려면 Terminal 에서 다음 명령어를 치고 PopClip을 재기동 하면 된다.</p>
 <div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>defaults write com.pilotmoon.popclip LoadUnsignedExtensions -bool YES
 </code></pre></div>
-<h1>2. Main Script 작성 - <a href="https://github.com/gumpcha/my-popclip-extensions/commit/bff167127104692eeb5c5c28f671c7518b9022fa">관련 커밋</a></h1>
+<h2>2. Main Script 작성 - <a href="https://github.com/gumpcha/my-popclip-extensions/commit/bff167127104692eeb5c5c28f671c7518b9022fa">관련 커밋</a></h2>
 
 <ol>
 <li>Main Script 이름은 <code>add-hyphens.sh</code></li>
@@ -100,7 +100,7 @@
 </code></pre></div></li>
 </ol>
 
-<h1>3. Config.plist 수정</h1>
+<h2>3. Config.plist 수정</h2>
 
 <p>남은 일은 <code>Config.plist</code>에 필요한 내용을 하나씩 수정하면 된다.</p>
 
@@ -126,7 +126,7 @@
 
 <p>아이콘은 PopClip popup 화면이나 설정 화면에서 필요하고, 최소 256x256 픽셀의 PNG 파일이면 된다. 여기선 <a href="http://simpleicon.com/list.html">http://simpleicon.com/list.html</a> 의 아이콘을 가져다 쓴다.</p>
 
-<h1>4. 참고</h1>
+<h2>4. 참고</h2>
 
 <ul>
 <li><a href="https://github.com/pilotmoon/PopClip-Extensions">Official PopClip Extensions Document</a></li>
