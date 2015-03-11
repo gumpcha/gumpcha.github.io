@@ -6,9 +6,62 @@
 </description>
     <link>http://gumpcha.github.io/</link>
     <atom:link href="http://gumpcha.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 07 Mar 2015 16:31:19 +0900</pubDate>
-    <lastBuildDate>Sat, 07 Mar 2015 16:31:19 +0900</lastBuildDate>
+    <pubDate>Thu, 12 Mar 2015 00:21:25 +0900</pubDate>
+    <lastBuildDate>Thu, 12 Mar 2015 00:21:25 +0900</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
+    
+      <item>
+        <title>git에서 symbolic link 파일 처리하기</title>
+        <description>&lt;h2&gt;문제&lt;/h2&gt;
+
+&lt;p&gt;git 저장소에 &lt;strong&gt;저장소 외부의 다른 파일&lt;/strong&gt;을 가르키도록 &lt;code&gt;ln -s&lt;/code&gt;로 symbolic link를 생성하면 저장소 외부 파일의 변경 내역이 관리되지 않는다.&lt;/p&gt;
+
+&lt;h2&gt;히스토리&lt;/h2&gt;
+
+&lt;p&gt;블로그 포스팅용 파일(&lt;code&gt;blog-posting.md&lt;/code&gt;)이 블로그 저장소 외부에서 따로 관리하는 파일(&lt;code&gt;~/Wiki/blog-posting.md&lt;/code&gt;)과 중복이 되서, &lt;code&gt;blog-posting.md&lt;/code&gt;가 &lt;code&gt;~/Wiki/blog-posting.md&lt;/code&gt;를 symbolic link하도록 블로그 저장소를 변경했다.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;blog-repo $ rm blog-posting.md
+blog-repo $ ln -s ~/Wiki/blog-posting.md blog-posting.md
+blog-repo $ git status
+...
+    typechange: blog-posting.md
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;처음 보는 &lt;code&gt;gis status&lt;/code&gt;의 &lt;code&gt;typechange&lt;/code&gt;라는게 실행 퍼미션 정도가 바뀐 건가 하고, 그냥 commit.&lt;/p&gt;
+
+&lt;p&gt;나중에 git commit history를 보니 파일 내용은 없어지고, &lt;code&gt;~/Wiki/blog-posting.md&lt;/code&gt; 라는 내용만 남아 있다. 실제 내용이야 html 파일로 남아 있긴 하지만 뭔가 찝찝해 해결책을 찾아보기로 했다.&lt;/p&gt;
+
+&lt;p&gt;위 내용에 대한 실제 커밋은 다음과 같은나 간단한 설명을 위해 파일 이름을 임의로 정해서 설명했다.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/gumpcha/gumpcha.github.io/commit/9851a01b03c85585a4d9d86151e962a5b3b55733&quot;&gt;regular file을 symbolic link로 변경한 커밋&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/gumpcha/gumpcha.github.io/commit/37c96daaa5e6e892a64778efdf879a71477e7c96&quot;&gt;softlink를 hardlink로 바꾼 다음 커밋&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2&gt;분석&lt;/h2&gt;
+
+&lt;p&gt;처음 symbolic link 파일을 만들 때 습관적으로 &lt;code&gt;ln -s&lt;/code&gt;라고 쳐서 softlink 파일이 생성되었고,
+git는 softlink된 파일은 파일 내용이 아니라 target file의 &lt;strong&gt;full path&lt;/strong&gt;를 저장한다.&lt;/p&gt;
+
+&lt;p&gt;또한, &lt;code&gt;git status&lt;/code&gt;에 &lt;code&gt;typechange&lt;/code&gt;라고 나오면 symbolic link와 regular file이 서로 바뀐 경우이다.&lt;/p&gt;
+
+&lt;h2&gt;해결 방법&lt;/h2&gt;
+
+&lt;p&gt;softlink가 아닌 hardlink로 symbolic link를 만들어서 저장소 밖의 원본 파일이 변경되어도 저장소에서 변경 내역을 인식하게 만든다.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;blog-repo $ rm blog-posting.md
+blog-repo $ ln ~/Wiki/blog-posting.md blog-posting.md
+blog-repo $ git status
+...
+  typechange: blog-posting.md
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;softlink와 hardlink에 대한 자세한 내용은 &lt;a href=&quot;http://www.geekride.com/hard-link-vs-soft-link/&quot;&gt;Hard Link vs Soft Link&lt;/a&gt;를 참고.&lt;/p&gt;
+</description>
+        <pubDate>Thu, 12 Mar 2015 00:00:00 +0900</pubDate>
+        <link>http://gumpcha.github.io/blog/git-symbolic-link</link>
+        <guid isPermaLink="true">http://gumpcha.github.io/blog/git-symbolic-link</guid>
+        
+        
+      </item>
     
       <item>
         <title>나만의 PopClip Extension 만들기</title>
