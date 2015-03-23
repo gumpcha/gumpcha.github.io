@@ -63,7 +63,7 @@
 
 <p>git 저장소에 <strong>저장소 외부의 다른 파일</strong>을 가르키도록 <code>ln -s</code>로 symbolic link를 생성하면 저장소 외부 파일의 변경 내역이 관리되지 않는다.</p>
 
-<h2>히스토리</h2>
+<h2>문제 발생 맥락</h2>
 
 <p>블로그 포스팅용 파일(<code>blog-posting.md</code>)이 블로그 저장소 외부에서 따로 관리하는 파일(<code>~/Wiki/blog-posting.md</code>)과 중복이 되서, <code>blog-posting.md</code>가 <code>~/Wiki/blog-posting.md</code>를 symbolic link하도록 블로그 저장소를 변경했다.</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text">blog-repo $ rm blog-posting.md
