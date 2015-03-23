@@ -6,9 +6,40 @@
 </description>
     <link>http://gumpcha.github.io/</link>
     <atom:link href="http://gumpcha.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 12 Mar 2015 00:21:25 +0900</pubDate>
-    <lastBuildDate>Thu, 12 Mar 2015 00:21:25 +0900</lastBuildDate>
+    <pubDate>Tue, 24 Mar 2015 08:34:26 +0900</pubDate>
+    <lastBuildDate>Tue, 24 Mar 2015 08:34:26 +0900</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
+    
+      <item>
+        <title>slack.com 특정 채널에 메세지 보내기</title>
+        <description>&lt;p&gt;몇 가지 방법이 있는 것 같은데, 두 가지만 정리해 본다.&lt;/p&gt;
+
+&lt;h1&gt;&lt;a href=&quot;https://my.slack.com/services/new/slackbot&quot;&gt;Slackbot Remote Integration&lt;/a&gt; 사용&lt;/h1&gt;
+
+&lt;p&gt;메세지만 보내는 용도라면, Slackbot Remote Integration 방법으로 간단하게 특정 채널로 메세지를 보낼 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://my.slack.com/services/new/slackbot&quot;&gt;Slackbot 설정 페이지&lt;/a&gt;에서 &lt;code&gt;Add Slackbot Integration&lt;/code&gt; 클릭하고, 하단 Integration Settings 항목의 &lt;code&gt;Webhook URL&lt;/code&gt;에 &lt;code&gt;channel&lt;/code&gt; 파라미터 추가해 HTTP POST 전송하면 된다.&lt;/p&gt;
+
+&lt;p&gt;팀 이름이 example인 경우의 curl 예제(대문자는 파라미터)&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl --data &lt;span class=&quot;s2&quot;&gt;&amp;quot;CHAT_MESSAGE&amp;quot;&lt;/span&gt;  &lt;span class=&quot;s1&quot;&gt;&amp;#39;https://EXAMPLE.slack.com/services/hooks/slackbot?token=TOKEN&amp;amp;channel=%23CHANNEL_NAME&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h1&gt;&lt;a href=&quot;https://api.slack.com/web&quot;&gt;Web API&lt;/a&gt; 사용&lt;/h1&gt;
+
+&lt;p&gt;사용자 관리, 채널 관리, Direct Message 관리, 채팅 메세지 관리 등을 할 수 있는 &lt;a href=&quot;https://api.slack.com/web&quot;&gt;Web API&lt;/a&gt;를 써서 메세지를 보낼 수도 있다. Slackbot Remote Integration과는 다르게 사용자 이름이나 기타 설정등을 변경할 수 있는 등, 세밀한 제어가 필요한 경우 사용하면 되겠다.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://api.slack.com/web&quot;&gt;Web API&lt;/a&gt; 페이지에서 token을 생성한 다음, &lt;a href=&quot;https://api.slack.com/methods/chat.postMessage&quot;&gt;메세지 포스팅에 필요한 파라미터&lt;/a&gt;를 설정해서 HTTP POST로 전송한다.&lt;/p&gt;
+
+&lt;p&gt;채널명은 &lt;code&gt;#&lt;/code&gt;이 붙은 &lt;code&gt;#channel_name&lt;/code&gt; 형태로 지정해야 된다.&lt;/p&gt;
+
+&lt;p&gt;curl 예제(대문자는 파라미터)&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl -X POST -d &lt;span class=&quot;s2&quot;&gt;&amp;quot;token=TOKEN&amp;amp;channel=CHANNEL_NAME&amp;amp;text=CHAT_MESSAGE&amp;amp;username=USERNAME&amp;quot;&lt;/span&gt; https://slack.com/api/chat.postMessage
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+        <pubDate>Tue, 24 Mar 2015 00:00:00 +0900</pubDate>
+        <link>http://gumpcha.github.io/blog/slack-post-message</link>
+        <guid isPermaLink="true">http://gumpcha.github.io/blog/slack-post-message</guid>
+        
+        
+      </item>
     
       <item>
         <title>git에서 symbolic link 파일 처리하기</title>
@@ -16,7 +47,7 @@
 
 &lt;p&gt;git 저장소에 &lt;strong&gt;저장소 외부의 다른 파일&lt;/strong&gt;을 가르키도록 &lt;code&gt;ln -s&lt;/code&gt;로 symbolic link를 생성하면 저장소 외부 파일의 변경 내역이 관리되지 않는다.&lt;/p&gt;
 
-&lt;h2&gt;히스토리&lt;/h2&gt;
+&lt;h2&gt;문제 발생 맥락&lt;/h2&gt;
 
 &lt;p&gt;블로그 포스팅용 파일(&lt;code&gt;blog-posting.md&lt;/code&gt;)이 블로그 저장소 외부에서 따로 관리하는 파일(&lt;code&gt;~/Wiki/blog-posting.md&lt;/code&gt;)과 중복이 되서, &lt;code&gt;blog-posting.md&lt;/code&gt;가 &lt;code&gt;~/Wiki/blog-posting.md&lt;/code&gt;를 symbolic link하도록 블로그 저장소를 변경했다.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;blog-repo $ rm blog-posting.md
