@@ -68,7 +68,7 @@
 <p><a href="https://my.slack.com/services/new/slackbot">Slackbot 설정 페이지</a>에서 <code>Add Slackbot Integration</code> 클릭하고, 하단 Integration Settings 항목의 <code>Webhook URL</code>에 <code>channel</code> 파라미터 추가해 HTTP POST 전송하면 된다.</p>
 
 <p>팀 이름이 example인 경우의 curl 예제(대문자는 파라미터)</p>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>curl --data <span class="s2">&quot;CHAT_MESSAGE&quot;</span>  <span class="s1">&#39;https://EXAMPLE.slack.com/services/hooks/slackbot?token=TOKEN&amp;channel=%23CHANNEL_NAME&#39;</span>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>curl --data <span class="s2">&quot;CHAT_MESSAGE&quot;</span> <span class="s1">&#39;https://EXAMPLE.slack.com/services/hooks/slackbot?token=TOKEN&amp;channel=%23CHANNEL_NAME&#39;</span>
 </code></pre></div>
 <h1><a href="https://api.slack.com/web">Web API</a> 사용</h1>
 
