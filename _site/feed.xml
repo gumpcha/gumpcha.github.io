@@ -6,9 +6,25 @@
 </description>
     <link>http://gumpcha.github.io/</link>
     <atom:link href="http://gumpcha.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 24 Mar 2015 08:34:26 +0900</pubDate>
-    <lastBuildDate>Tue, 24 Mar 2015 08:34:26 +0900</lastBuildDate>
+    <pubDate>Wed, 29 Apr 2015 16:04:00 +0900</pubDate>
+    <lastBuildDate>Wed, 29 Apr 2015 16:04:00 +0900</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
+    
+      <item>
+        <title>Vim에서 여러 명령어 동시에 실행하기</title>
+        <description>&lt;p&gt;&lt;code&gt;|&lt;/code&gt;를 쓰면 된다.&lt;/p&gt;
+
+&lt;p&gt;예를 들어, 전체 내용 중 one을 ONE으로 바꾸고, two를 TWO로 바꾸고, 빈 줄을 지우려면&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;:%s/one/ONE/g | %s/two/TWO/g | g/^$/d
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;라고 하면 된다.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 29 Apr 2015 00:00:00 +0900</pubDate>
+        <link>http://gumpcha.github.io/blog/vim-multiple-command</link>
+        <guid isPermaLink="true">http://gumpcha.github.io/blog/vim-multiple-command</guid>
+        
+        
+      </item>
     
       <item>
         <title>slack.com 특정 채널에 메세지 보내기</title>
@@ -21,7 +37,7 @@
 &lt;p&gt;&lt;a href=&quot;https://my.slack.com/services/new/slackbot&quot;&gt;Slackbot 설정 페이지&lt;/a&gt;에서 &lt;code&gt;Add Slackbot Integration&lt;/code&gt; 클릭하고, 하단 Integration Settings 항목의 &lt;code&gt;Webhook URL&lt;/code&gt;에 &lt;code&gt;channel&lt;/code&gt; 파라미터 추가해 HTTP POST 전송하면 된다.&lt;/p&gt;
 
 &lt;p&gt;팀 이름이 example인 경우의 curl 예제(대문자는 파라미터)&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl --data &lt;span class=&quot;s2&quot;&gt;&amp;quot;CHAT_MESSAGE&amp;quot;&lt;/span&gt;  &lt;span class=&quot;s1&quot;&gt;&amp;#39;https://EXAMPLE.slack.com/services/hooks/slackbot?token=TOKEN&amp;amp;channel=%23CHANNEL_NAME&amp;#39;&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl --data &lt;span class=&quot;s2&quot;&gt;&amp;quot;CHAT_MESSAGE&amp;quot;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;https://EXAMPLE.slack.com/services/hooks/slackbot?token=TOKEN&amp;amp;channel=%23CHANNEL_NAME&amp;#39;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h1&gt;&lt;a href=&quot;https://api.slack.com/web&quot;&gt;Web API&lt;/a&gt; 사용&lt;/h1&gt;
 
