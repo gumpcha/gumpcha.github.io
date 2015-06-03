@@ -6,9 +6,93 @@
 </description>
     <link>http://gumpcha.github.io/</link>
     <atom:link href="http://gumpcha.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 29 Apr 2015 16:04:00 +0900</pubDate>
-    <lastBuildDate>Wed, 29 Apr 2015 16:04:00 +0900</lastBuildDate>
+    <pubDate>Wed, 03 Jun 2015 09:01:31 +0900</pubDate>
+    <lastBuildDate>Wed, 03 Jun 2015 09:01:31 +0900</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
+    
+      <item>
+        <title>Bootstrap 3 grid system 이해하기</title>
+        <description>&lt;h2&gt;소개&lt;/h2&gt;
+
+&lt;p&gt;Bootstrap 3 grid system은 브라우져 크기에 따라 한 줄에 최대 12 컬럼의 컨텐츠를 어떻게 배치할 것인가를 정해주고,
+기본 구조는 다음과 같아야 한다.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;.container
+  .row
+    .col-xs-#
+    .col-xs-#
+  .row
+    .col-xs-#
+    .col-xs-#
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Column class는 브라우져 크기에 따라 다음 네 가지로 정의된다.&lt;/p&gt;
+
+&lt;p&gt;Column class | Desc.
+--------------|-------
+.col-xs-# | Extra Small(핸드폰, 768px 이하)
+.col-sm-# | Small(태블릿, 768px 이상)
+.col-md-# | Medium(데스크탑, 992px 이상)
+.col-lg-# | Large(데스크탑, 1200px 이상)&lt;/p&gt;
+
+&lt;p&gt;알아둘 것&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;1 row에 12 column이 넘어가면 자동으로 다음 row로 처리된다.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Mobile first&lt;/strong&gt; 정책이므로, 아무것도 지정하지 않으면 &lt;code&gt;.col-xs-1&lt;/code&gt;이 지정된다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;예제&lt;/h2&gt;
+
+&lt;p&gt;총 4개의 column을 사이즈별로 다음처럼 구성하고 싶은 경우&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;모바일에서는 한 줄에 1 컬럼&lt;/li&gt;
+&lt;li&gt;태블릿과 Medium 데스크탑에서는 한 줄에 2 컬럼&lt;/li&gt;
+&lt;li&gt;Large 데스크탑에서는 한 줄에 4 컬럼&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;이렇게 지정하면&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;lt;div class=&amp;quot;row&amp;quot;&amp;gt;
+    &amp;lt;div class=&amp;quot;col-sm-6 col-lg-3&amp;quot;&amp;gt;
+        column 1
+    &amp;lt;/div&amp;gt;
+    &amp;lt;div class=&amp;quot;col-sm-6 col-lg-3&amp;quot;&amp;gt;
+        column 2
+    &amp;lt;/div&amp;gt;
+    &amp;lt;div class=&amp;quot;col-sm-6 col-lg-3&amp;quot;&amp;gt;
+        column 3
+    &amp;lt;/div&amp;gt;
+    &amp;lt;div class=&amp;quot;col-sm-6 col-lg-3&amp;quot;&amp;gt;
+        column 4
+    &amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;모바일에서는 &lt;code&gt;.col-xs&lt;/code&gt;를 따로 지정하지 않았기 때문에 디폴트로 &lt;code&gt;.col-xs-1&lt;/code&gt;이 적용되고&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;| column 1 |
+| column 2 |
+| column 3 |
+| column 4 |
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;태블릿과 Medium 데스크탑에서는 &lt;code&gt;.col-sm-6&lt;/code&gt;가 적용되며&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;| column 1 | column 2 |
+| column 3 | column 4 |
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Large 데스크탑에서는 &lt;code&gt;.col-lg-3&lt;/code&gt;이 적용된다.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;| column 1 | column 2 | column 3 | column 4 |
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;참조&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://scotch.io/tutorials/understanding-the-bootstrap-3-grid-system&quot;&gt;Understanding the Bootstrap 3 Grid System&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://getbootstrap.com/css/#grid&quot;&gt;Bootstrap grid system 공식 설명&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://getbootstrap.com/examples/grid&quot;&gt;Bootstrap grid system 공식 예제&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Wed, 03 Jun 2015 00:00:00 +0900</pubDate>
+        <link>http://gumpcha.github.io/blog/bootstrap-grid-system</link>
+        <guid isPermaLink="true">http://gumpcha.github.io/blog/bootstrap-grid-system</guid>
+        
+        
+      </item>
     
       <item>
         <title>Vim에서 여러 명령어 동시에 실행하기</title>
