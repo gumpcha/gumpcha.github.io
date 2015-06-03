@@ -6,8 +6,8 @@
 </description>
     <link>http://gumpcha.github.io/</link>
     <atom:link href="http://gumpcha.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 03 Jun 2015 09:01:31 +0900</pubDate>
-    <lastBuildDate>Wed, 03 Jun 2015 09:01:31 +0900</lastBuildDate>
+    <pubDate>Wed, 03 Jun 2015 09:07:53 +0900</pubDate>
+    <lastBuildDate>Wed, 03 Jun 2015 09:07:53 +0900</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
@@ -26,12 +26,29 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Column class는 브라우져 크기에 따라 다음 네 가지로 정의된다.&lt;/p&gt;
 
-&lt;p&gt;Column class | Desc.
---------------|-------
-.col-xs-# | Extra Small(핸드폰, 768px 이하)
-.col-sm-# | Small(태블릿, 768px 이상)
-.col-md-# | Medium(데스크탑, 992px 이상)
-.col-lg-# | Large(데스크탑, 1200px 이상)&lt;/p&gt;
+&lt;table&gt;&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Column class&lt;/th&gt;
+&lt;th&gt;Desc.&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;.col-xs-#&lt;/td&gt;
+&lt;td&gt;Extra Small(핸드폰, 768px 이하)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;.col-sm-#&lt;/td&gt;
+&lt;td&gt;Small(태블릿, 768px 이상)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;.col-md-#&lt;/td&gt;
+&lt;td&gt;Medium(데스크탑, 992px 이상)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;.col-lg-#&lt;/td&gt;
+&lt;td&gt;Large(데스크탑, 1200px 이상)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
 
 &lt;p&gt;알아둘 것&lt;/p&gt;
 
