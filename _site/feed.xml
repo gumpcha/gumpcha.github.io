@@ -6,8 +6,8 @@
 </description>
     <link>http://gumpcha.github.io/</link>
     <atom:link href="http://gumpcha.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 03 Jun 2015 09:07:53 +0900</pubDate>
-    <lastBuildDate>Wed, 03 Jun 2015 09:07:53 +0900</lastBuildDate>
+    <pubDate>Wed, 03 Jun 2015 11:43:18 +0900</pubDate>
+    <lastBuildDate>Wed, 03 Jun 2015 11:43:18 +0900</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
@@ -54,7 +54,7 @@
 
 &lt;ul&gt;
 &lt;li&gt;1 row에 12 column이 넘어가면 자동으로 다음 row로 처리된다.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Mobile first&lt;/strong&gt; 정책이므로, 아무것도 지정하지 않으면 &lt;code&gt;.col-xs-1&lt;/code&gt;이 지정된다.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Mobile first&lt;/strong&gt; 정책이므로, 아무것도 지정하지 않으면 &lt;code&gt;.col-xs-12&lt;/code&gt;가 지정된다.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2&gt;예제&lt;/h2&gt;
@@ -83,7 +83,7 @@
     &amp;lt;/div&amp;gt;
 &amp;lt;/div&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;모바일에서는 &lt;code&gt;.col-xs&lt;/code&gt;를 따로 지정하지 않았기 때문에 디폴트로 &lt;code&gt;.col-xs-1&lt;/code&gt;이 적용되고&lt;/p&gt;
+&lt;p&gt;모바일에서는 &lt;code&gt;.col-xs&lt;/code&gt;를 따로 지정하지 않았기 때문에 디폴트로 &lt;code&gt;.col-xs-12&lt;/code&gt;가 적용되고&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;| column 1 |
 | column 2 |
 | column 3 |
