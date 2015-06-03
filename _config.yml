@@ -14,7 +14,7 @@ permalink: /blog/:title
 # Build settings
 markdown: redcarpet
 redcarpet:
-  extensions: ["autolink"]
+  extensions: ["autolink", "tables", "fenced_code_blocks", "no_intra_emphasis"]
 
 exclude: [publish.sh]
 include: [.nojekyll]
