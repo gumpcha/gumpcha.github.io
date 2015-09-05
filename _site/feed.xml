@@ -6,9 +6,33 @@
 </description>
     <link>http://gumpcha.github.io/</link>
     <atom:link href="http://gumpcha.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 03 Jun 2015 11:43:18 +0900</pubDate>
-    <lastBuildDate>Wed, 03 Jun 2015 11:43:18 +0900</lastBuildDate>
+    <pubDate>Sat, 05 Sep 2015 14:50:48 +0900</pubDate>
+    <lastBuildDate>Sat, 05 Sep 2015 14:50:48 +0900</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
+    
+      <item>
+        <title>Github issue에 첨부 image 크기 조절하기</title>
+        <description>&lt;p&gt;github issue에 이미지를 끌어다 놓으면 다음과 같은 markdown이 자동으로 생성된다.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;![파일이름](cloud.githubusercontent.com업로드된 URL)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;이 이미지는 width가 100%로 잡히기 때문에 이미지 크기를 조절하고 싶다면 &lt;code&gt;width&lt;/code&gt; attribute를 적용하면 된다.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;lt;img src=&amp;quot;cloud.githubcontents.com에 업로드된 URL&amp;quot; width=&amp;quot;40%&amp;quot;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;참고로, &lt;code&gt;style&lt;/code&gt; attribute는 안 먹는다.&lt;/p&gt;
+
+&lt;h2&gt;참고&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://stackoverflow.com/a/27830083/2260566&quot;&gt;http://stackoverflow.com/a/27830083/2260566&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://blog.davidebbo.com/2014/11/using-issues-for-github-pages-screenshots.html&quot;&gt;http://blog.davidebbo.com/2014/11/using-issues-for-github-pages-screenshots.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sat, 05 Sep 2015 00:00:00 +0900</pubDate>
+        <link>http://gumpcha.github.io/blog/github-issue-image-resize</link>
+        <guid isPermaLink="true">http://gumpcha.github.io/blog/github-issue-image-resize</guid>
+        
+        
+      </item>
     
       <item>
         <title>Bootstrap 3 grid system 이해하기</title>
