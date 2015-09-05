@@ -6,9 +6,31 @@
 </description>
     <link>http://gumpcha.github.io/</link>
     <atom:link href="http://gumpcha.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 05 Sep 2015 14:50:48 +0900</pubDate>
-    <lastBuildDate>Sat, 05 Sep 2015 14:50:48 +0900</lastBuildDate>
+    <pubDate>Sat, 05 Sep 2015 16:39:50 +0900</pubDate>
+    <lastBuildDate>Sat, 05 Sep 2015 16:39:50 +0900</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
+    
+      <item>
+        <title>git 저장소에 이미 commit 된 파일 무시하기</title>
+        <description>&lt;p&gt;로그나 바이너리등 git로 관리가 불필요한 파일인데 &lt;code&gt;.gitignore&lt;/code&gt;에 추가하는 것을 빼먹고 이미 commit하는 경우가 있다.&lt;/p&gt;
+
+&lt;p&gt;이럴 경우, working directory에는 남겨두고 staging area에서만 삭제해야 하므로 &lt;code&gt;git rm --cached&lt;/code&gt; 명령어로 해당 파일을 더 이상 추적하지 않게 하고 다시 commit을 해 준 다음,&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git rm --cached log.txt
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git commit -m &lt;span class=&quot;s1&quot;&gt;&amp;#39;untrack log.txt&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;.gitignore&lt;/code&gt;에 해당 파일을 추가해 주고 &lt;code&gt;.gitignore&lt;/code&gt;도 commit 해 주면 된다.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;vi .gitignore
+...
+log.txt &lt;span class=&quot;c&quot;&gt;# 추가&lt;/span&gt;
+...
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git commit -am &lt;span class=&quot;s1&quot;&gt;&amp;#39;ignore log.txt&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+        <pubDate>Sat, 05 Sep 2015 00:00:00 +0900</pubDate>
+        <link>http://gumpcha.github.io/blog/gitignore-tracked-file</link>
+        <guid isPermaLink="true">http://gumpcha.github.io/blog/gitignore-tracked-file</guid>
+        
+        
+      </item>
     
       <item>
         <title>Github issue에 첨부 image 크기 조절하기</title>
