@@ -117,49 +117,72 @@
 
 <p><code class="highlighter-rouge">user.birthyear</code>가 정의된 최대값 2018보다 크기 때문에 validate error가 났다. <code class="highlighter-rouge">Joi.validate</code> return 값의 <code class="highlighter-rouge">value</code>는 원래 입력값인 <code class="highlighter-rouge">user</code>의 내용이 그대로 표시되므로, return 값의 <code class="highlighter-rouge">error</code>가 null 인지 아닌지로 validate 성공, 실패 여부를 확인하면 된다.</p>
 
-<h3 id="unknown">.unknown</h3>
+<h2 id="joi의-동작">Joi의 동작</h2>
 
-<p>기본적인 중요한 부분은 훑었으니, <code class="highlighter-rouge">Joi</code>의 default 동작을 알아보자.</p>
+<p>기본적인 중요한 부분은 훑었으니, <code class="highlighter-rouge">Joi</code>의 동작 방식을 몇 가지 알아보자.</p>
 
-<p><code class="highlighter-rouge">schema</code>에 정의되지 않은 key는 validate error가 난다. 이를 피하려면 <code class="highlighter-rouge">.unknown</code>을 쓰면 된다.</p>
+<h3 id="unknown-api">.unknown() API</h3>
+
+<p><code class="highlighter-rouge">schema</code>에 정의되지 않은 key는 validate error가 난다. 이를 피하려면 <a href="https://github.com/hapijs/joi/blob/v13.7.0/API.md#objectunknownallow"><code class="highlighter-rouge">.unknown()</code></a> API를 쓰면 된다.</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">Joi</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'joi'</span><span class="p">);</span>
 
 <span class="c1">// .unknown()이 없는 경우</span>
 <span class="kd">const</span> <span class="nx">schema1</span> <span class="o">=</span> <span class="nx">Joi</span><span class="p">.</span><span class="nx">object</span><span class="p">().</span><span class="nx">keys</span><span class="p">({</span>
-  <span class="na">a</span><span class="p">:</span> <span class="nx">Joi</span><span class="p">.</span><span class="nx">any</span><span class="p">(),</span>
+  <span class="na">username</span><span class="p">:</span> <span class="nx">Joi</span><span class="p">.</span><span class="nx">string</span><span class="p">().</span><span class="nx">min</span><span class="p">(</span><span class="mi">3</span><span class="p">).</span><span class="nx">max</span><span class="p">(</span><span class="mi">30</span><span class="p">).</span><span class="nx">required</span><span class="p">(),</span>
 <span class="p">});</span>
 
 <span class="kd">const</span> <span class="nx">user1</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="na">a</span><span class="p">:</span> <span class="s1">'a'</span><span class="p">,</span>
-  <span class="na">b</span><span class="p">:</span> <span class="s1">'b'</span><span class="p">,</span>   <span class="c1">// schema1에 정의되지 않은(unknown) 'b'는 validate error</span>
+  <span class="na">username</span><span class="p">:</span> <span class="s1">'username1'</span><span class="p">,</span>
+  <span class="na">birthyear</span><span class="p">:</span> <span class="mi">2014</span><span class="p">,</span>   <span class="c1">// schema1에 정의되지 않은(unknown) 'birthyear'</span>
 <span class="p">};</span>
 <span class="kd">const</span> <span class="p">{</span><span class="na">error</span><span class="p">:</span> <span class="nx">error1</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="nx">value1</span><span class="p">}</span> <span class="o">=</span> <span class="nx">Joi</span><span class="p">.</span><span class="nx">validate</span><span class="p">(</span><span class="nx">user1</span><span class="p">,</span> <span class="nx">schema1</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error1</span><span class="p">);</span> <span class="c1">// Error: "b" is not allowed</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">value1</span><span class="p">);</span> <span class="c1">// {a: "a", b: "b"}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error1</span><span class="p">);</span> <span class="c1">// Error: "birthyear" is not allowed</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">value1</span><span class="p">);</span> <span class="c1">// {username: "username1", birthyear: 2014}</span>
 
 
 <span class="c1">// .unknown()이 있는 경우</span>
 <span class="kd">const</span> <span class="nx">schema2</span> <span class="o">=</span> <span class="nx">Joi</span><span class="p">.</span><span class="nx">object</span><span class="p">().</span><span class="nx">keys</span><span class="p">({</span>
-  <span class="na">a</span><span class="p">:</span> <span class="nx">Joi</span><span class="p">.</span><span class="nx">any</span><span class="p">(),</span>
+  <span class="na">username</span><span class="p">:</span> <span class="nx">Joi</span><span class="p">.</span><span class="nx">string</span><span class="p">().</span><span class="nx">min</span><span class="p">(</span><span class="mi">3</span><span class="p">).</span><span class="nx">max</span><span class="p">(</span><span class="mi">30</span><span class="p">).</span><span class="nx">required</span><span class="p">(),</span>
 <span class="p">})</span>
   <span class="p">.</span><span class="nx">unknown</span><span class="p">();</span>  <span class="c1">// 정의되지 않은 key도 허용함.</span>
 
 <span class="kd">const</span> <span class="nx">user2</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="na">a</span><span class="p">:</span> <span class="s1">'a'</span><span class="p">,</span>
-  <span class="na">b</span><span class="p">:</span> <span class="s1">'b'</span><span class="p">,</span>  <span class="c1">//  schema2에 정의되지 않은(unknown) 'b'도 validate success</span>
+  <span class="na">username</span><span class="p">:</span> <span class="s1">'username1'</span><span class="p">,</span>
+  <span class="na">birthyear</span><span class="p">:</span> <span class="mi">2014</span><span class="p">,</span>   <span class="c1">// schema1에 정의되지 않은(unknown) 'birthyear'</span>
 <span class="p">};</span>
 <span class="kd">const</span> <span class="p">{</span><span class="na">error</span><span class="p">:</span> <span class="nx">error2</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="nx">value2</span><span class="p">}</span> <span class="o">=</span> <span class="nx">Joi</span><span class="p">.</span><span class="nx">validate</span><span class="p">(</span><span class="nx">user2</span><span class="p">,</span> <span class="nx">schema2</span><span class="p">);</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error2</span><span class="p">);</span> <span class="c1">// null</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">value2</span><span class="p">);</span> <span class="c1">// {a: "a", b: "b"}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">value2</span><span class="p">);</span> <span class="c1">// {username: "username1", birthyear: 2014}</span>
 </code></pre></div></div>
 
-<h3 id="option-abortealry">option: abortEalry</h3>
+<h3 id="abortealry-option">abortEalry option</h3>
 
-<p>정의된 key 중 에러가 나면 더 이상 진행하지 않는 것이 기본 동작(<code class="highlighter-rouge">abortEarly: true</code>)이다. 한 번에 모든 에러를 확인하고 싶으면 <code class="highlighter-rouge">validate</code>의 <code class="highlighter-rouge">option</code>에 <code class="highlighter-rouge">abortEarly: false</code>를 설정하면 된다.</p>
+<p>정의된 key 중 에러가 나면 더 이상 진행하지 않는 것이 기본 동작(<code class="highlighter-rouge">abortEarly: true</code>)이다. 한 번에 모든 에러를 확인하고 싶으면 validate 시점에 동작을 제어할 수 있는 <a href="https://github.com/hapijs/joi/blob/v13.7.0/API.md#validatevalue-schema-options-callback"><code class="highlighter-rouge">validate()</code>의 세 번째 파라미터</a>로 <code class="highlighter-rouge">{abortEarly: false}</code>를 설정하면 된다.</p>
 
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">Joi</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'joi'</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">schema</span> <span class="o">=</span> <span class="nx">Joi</span><span class="p">.</span><span class="nx">object</span><span class="p">().</span><span class="nx">keys</span><span class="p">({</span>
+  <span class="na">username</span><span class="p">:</span> <span class="nx">Joi</span><span class="p">.</span><span class="nx">string</span><span class="p">().</span><span class="nx">min</span><span class="p">(</span><span class="mi">3</span><span class="p">).</span><span class="nx">max</span><span class="p">(</span><span class="mi">30</span><span class="p">).</span><span class="nx">required</span><span class="p">(),</span>
+  <span class="na">birthyear</span><span class="p">:</span> <span class="nx">Joi</span><span class="p">.</span><span class="nx">number</span><span class="p">().</span><span class="nx">integer</span><span class="p">().</span><span class="nx">min</span><span class="p">(</span><span class="mi">1900</span><span class="p">).</span><span class="nx">max</span><span class="p">(</span><span class="mi">2018</span><span class="p">),</span>
+<span class="p">});</span>
+
+<span class="kd">const</span> <span class="nx">user</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">birthyear</span><span class="p">:</span> <span class="mi">2020</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="kd">const</span> <span class="nx">options</span><span class="p">:</span> <span class="p">{</span>
+  <span class="nl">abortEarly</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="kd">const</span> <span class="p">{</span><span class="nx">error</span><span class="p">,</span> <span class="nx">value</span><span class="p">}</span> <span class="o">=</span> <span class="nx">Joi</span><span class="p">.</span><span class="nx">validate</span><span class="p">(</span><span class="nx">user</span><span class="p">,</span> <span class="nx">schema</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span> <span class="c1">// Error: child "username" fails because ["username" is required]. child "birthyear" fails because ["birthyear" must be less than or equal to 2018]</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span> <span class="c1">// {birthyear: 2020}</span>
 </code></pre></div></div>
+
+<p><code class="highlighter-rouge">.required()</code>인 <code class="highlighter-rouge">username</code>이 없는 error와 <code class="highlighter-rouge">.max(2018)</code>을 위반한 <code class="highlighter-rouge">birthyear</code>가 모두 validate error로 검출되었다.</p>
+
+<p>이 외에도 여러가지 option이나 API가 있으니, 상황에 맞게 사용하면 된다.</p>
 
 <h2 id="관계-api">관계 API</h2>
 
