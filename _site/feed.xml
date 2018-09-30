@@ -4,30 +4,229 @@
     <title>차현진 블로그</title>
     <description>저엔트로피를 지향하는 개발자
 </description>
-    <link>http://gumpcha.github.io/</link>
-    <atom:link href="http://gumpcha.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 05 Sep 2015 16:39:50 +0900</pubDate>
-    <lastBuildDate>Sat, 05 Sep 2015 16:39:50 +0900</lastBuildDate>
-    <generator>Jekyll v2.4.0</generator>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Sun, 30 Sep 2018 13:34:17 +0900</pubDate>
+    <lastBuildDate>Sun, 30 Sep 2018 13:34:17 +0900</lastBuildDate>
+    <generator>Jekyll v3.7.4</generator>
+    
+      <item>
+        <title>Joi, Javascript object schema validator</title>
+        <description>&lt;h2 id=&quot;시작하기&quot;&gt;시작하기&lt;/h2&gt;
+
+&lt;p&gt;API 수준이든, 함수 수준이든 외부 입력을 항상 validation하는 습관은 중요하다. 귀찮다고 빼 먹는다면 언젠가는 분명 문제를 일으킬 것이다. 많은 node용 validator가 있지만 &lt;code class=&quot;highlighter-rouge&quot;&gt;Joi&lt;/code&gt;가 우수한 점은 &lt;strong&gt;관계&lt;/strong&gt;에 따른 내용을 정의할 수 있다는 점이다. 예를 들어 &lt;code class=&quot;highlighter-rouge&quot;&gt;a&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;b&lt;/code&gt;가 둘 중에 하나라도 있으면 된다든가, &lt;code class=&quot;highlighter-rouge&quot;&gt;a&lt;/code&gt;가 있을 때만 &lt;code class=&quot;highlighter-rouge&quot;&gt;b&lt;/code&gt;가 있어야 된다는 식이다.&lt;/p&gt;
+
+&lt;p&gt;여기서 다루는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Joi&lt;/code&gt;의 모든 기능은 &lt;a href=&quot;https://github.com/hapijs/joi/blob/v13.6.0/API.md&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;API 13.6.0&lt;/code&gt;&lt;/a&gt;을 따르고 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;관계&lt;/strong&gt;에 따른 &lt;code class=&quot;highlighter-rouge&quot;&gt;Joi&lt;/code&gt; 사용법은 뒤에서 알아보고 우선은 &lt;code class=&quot;highlighter-rouge&quot;&gt;Joi&lt;/code&gt;의 간단한 사용법부터 알아보자.&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'joi'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// validate할 schema 정의&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;schema&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;keys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;username&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;required&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;birthyear&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;integer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1900&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2018&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// validate할 object&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;username&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'username1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// validate&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;validate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// null&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// {username: &quot;username1&quot;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;입력인 &lt;code class=&quot;highlighter-rouge&quot;&gt;user&lt;/code&gt;가 미리 정의된 &lt;code class=&quot;highlighter-rouge&quot;&gt;schema&lt;/code&gt;와 일치하는지를 확인한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;schema&lt;/code&gt;는 다음과 같이 정의되었다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;username&lt;/code&gt;: string이고, 길이가 최소 3글자에서 최대 30글자이며, 필수 항목임.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;birthyear&lt;/code&gt;: number이고, integer이며, 최소 1900에서 최대 2013까지 허용하고, 옵션 항목임.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;따라서 &lt;code class=&quot;highlighter-rouge&quot;&gt;user.username&lt;/code&gt;은 &lt;code class=&quot;highlighter-rouge&quot;&gt;schema&lt;/code&gt;에 정의된 내용에 부합하고, &lt;code class=&quot;highlighter-rouge&quot;&gt;user.birthyear&lt;/code&gt;는 optional로 정의되었기 때문에 없어도 문제 없이 validate되었다.&lt;/p&gt;
+
+&lt;p&gt;에러가 나는 경우는 어떻게 되는지 알아보자.&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'joi'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;schema&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;keys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;username&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;required&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;birthyear&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;integer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1900&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2018&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;username&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'username1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;birthyear&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2020&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;validate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Error: child &quot;birthyear&quot; fails because [&quot;birthyear&quot; must be less than or equal to 2018]&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// {username: &quot;username1&quot;, birthyear: 2020}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;user.birthyear&lt;/code&gt;가 정의된 최대값 2018보다 크기 때문에 validate error가 났다. &lt;code class=&quot;highlighter-rouge&quot;&gt;Joi.validate&lt;/code&gt; return 값의 &lt;code class=&quot;highlighter-rouge&quot;&gt;value&lt;/code&gt;는 원래 입력값인 &lt;code class=&quot;highlighter-rouge&quot;&gt;user&lt;/code&gt;의 내용이 그대로 표시되므로, return 값의 &lt;code class=&quot;highlighter-rouge&quot;&gt;error&lt;/code&gt;가 null 인지 아닌지로 validate 성공, 실패 여부를 확인하면 된다.&lt;/p&gt;
+
+&lt;h3 id=&quot;unknown&quot;&gt;.unknown&lt;/h3&gt;
+
+&lt;p&gt;기본적인 중요한 부분은 훑었으니, &lt;code class=&quot;highlighter-rouge&quot;&gt;Joi&lt;/code&gt;의 default 동작을 알아보자.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;schema&lt;/code&gt;에 정의되지 않은 key는 validate error가 난다. 이를 피하려면 &lt;code class=&quot;highlighter-rouge&quot;&gt;.unknown&lt;/code&gt;을 쓰면 된다.&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'joi'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// .unknown()이 없는 경우&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;schema1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;keys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;any&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;user1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'a'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'b'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;// schema1에 정의되지 않은(unknown) 'b'는 validate error&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;error1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;value1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;validate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;user1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;schema1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;error1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Error: &quot;b&quot; is not allowed&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// {a: &quot;a&quot;, b: &quot;b&quot;}&lt;/span&gt;
+
+
+&lt;span class=&quot;c1&quot;&gt;// .unknown()이 있는 경우&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;schema2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;keys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;any&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;unknown&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// 정의되지 않은 key도 허용함.&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;user2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'a'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'b'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;//  schema2에 정의되지 않은(unknown) 'b'도 validate success&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;error2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;value2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;validate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;user2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;schema2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;error2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// null&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// {a: &quot;a&quot;, b: &quot;b&quot;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;option-abortealry&quot;&gt;option: abortEalry&lt;/h3&gt;
+
+&lt;p&gt;정의된 key 중 에러가 나면 더 이상 진행하지 않는 것이 기본 동작(&lt;code class=&quot;highlighter-rouge&quot;&gt;abortEarly: true&lt;/code&gt;)이다. 한 번에 모든 에러를 확인하고 싶으면 &lt;code class=&quot;highlighter-rouge&quot;&gt;validate&lt;/code&gt;의 &lt;code class=&quot;highlighter-rouge&quot;&gt;option&lt;/code&gt;에 &lt;code class=&quot;highlighter-rouge&quot;&gt;abortEarly: false&lt;/code&gt;를 설정하면 된다.&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;관계-api&quot;&gt;관계 API&lt;/h2&gt;
+
+&lt;p&gt;끝으로, 관계에 관련된 API를 알아보자.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;.and&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;.or&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;.nand&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;.xor&lt;/code&gt;는  bit 연산과 동일하게 생각하면 된다. 예를 들어 &lt;code class=&quot;highlighter-rouge&quot;&gt;.or&lt;/code&gt;는 정의된 key가 하나 이상이나 모두 있으면 되지만, &lt;code class=&quot;highlighter-rouge&quot;&gt;.xor&lt;/code&gt;는 정의된 key가 모두 있는 경우에 validate error가 난다.&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'joi'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;schema&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;keys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;handphone&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;homephone&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'handphone'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'homephone'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;handphone&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'01011112222'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;homephone&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'023334444'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;validate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Error: &quot;value&quot; contains a conflict between exclusive peers [handphone, homephone]&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// {handphone: &quot;01011112222&quot;, homephone: &quot;023334444&quot;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;handphone&lt;/code&gt;과 &lt;code class=&quot;highlighter-rouge&quot;&gt;homephone&lt;/code&gt;을 &lt;code class=&quot;highlighter-rouge&quot;&gt;.and&lt;/code&gt;로 묶었기 때문에 &lt;code class=&quot;highlighter-rouge&quot;&gt;homephone&lt;/code&gt;이 없어서 validate error가 발생했다.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;.with&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;.without&lt;/code&gt;은 기준 key에 대해서 있어야 되거나 없어야 되는 관계를 설정한다.&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'joi'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;schema&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;keys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;address1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;address2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;with&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'address1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'address2'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;address1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'address1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;validate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Error: &quot;address1&quot; missing required peer &quot;address2&quot;&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// {address1: &quot;address1&quot;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;address1&lt;/code&gt;가 있는데 &lt;code class=&quot;highlighter-rouge&quot;&gt;address2&lt;/code&gt;가 없는 경우에만 validate error가 난다.&lt;/p&gt;
+
+&lt;p&gt;끝으로 key 관계에 조건을 걸 수 있는 &lt;code class=&quot;highlighter-rouge&quot;&gt;.when&lt;/code&gt; 예제를 보자.&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'joi'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;schema&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;keys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;handphone&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;homephone&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;mobile_os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;when&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'handphone'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;is&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;exist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;required&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;otherwise&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;forbidden&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}),&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;위 schema를 말로 표현하면 &lt;code class=&quot;highlighter-rouge&quot;&gt;mobile_os&lt;/code&gt;는 &lt;code class=&quot;highlighter-rouge&quot;&gt;handphone&lt;/code&gt;이 있는 경우에만 유효하고, &lt;code class=&quot;highlighter-rouge&quot;&gt;handphone&lt;/code&gt;이 없는데 &lt;code class=&quot;highlighter-rouge&quot;&gt;mobile_os&lt;/code&gt;가 있다면 validate error가 난다.&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// handphone과 mobile_os가 모두 있어 validate success&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;user1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;handphone&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'01011112222'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;mobile_os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'ios'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;error1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;value1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;validate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;user1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;error1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// null&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// {handphone: &quot;01011112222&quot;, mobile_os: &quot;ios&quot;}&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// handphone이 없는데  mobile_os가 있어 validate error&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;user2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;homephone&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'023334444'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;mobile_os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'ios'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;error2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;value2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Joi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;validate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;user2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;error2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Error: child &quot;mobile_os&quot; fails because [&quot;mobile_os&quot; is not allowed]&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// {homephone: &quot;023334444&quot;, mobile_os: &quot;ios&quot;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Sun, 09 Sep 2018 00:00:00 +0900</pubDate>
+        <link>http://localhost:4000/blog/joi-overview</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/joi-overview</guid>
+        
+        
+      </item>
     
       <item>
         <title>git 저장소에 이미 commit 된 파일 무시하기</title>
-        <description>&lt;p&gt;로그나 바이너리등 git로 관리가 불필요한 파일인데 &lt;code&gt;.gitignore&lt;/code&gt;에 추가하는 것을 빼먹고 이미 commit하는 경우가 있다.&lt;/p&gt;
+        <description>&lt;p&gt;로그나 바이너리등 git로 관리가 불필요한 파일인데 &lt;code class=&quot;highlighter-rouge&quot;&gt;.gitignore&lt;/code&gt;에 추가하는 것을 빼먹고 이미 commit하는 경우가 있다.&lt;/p&gt;
 
-&lt;p&gt;이럴 경우, working directory에는 남겨두고 staging area에서만 삭제해야 하므로 &lt;code&gt;git rm --cached&lt;/code&gt; 명령어로 해당 파일을 더 이상 추적하지 않게 하고 다시 commit을 해 준 다음,&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git rm --cached log.txt
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git commit -m &lt;span class=&quot;s1&quot;&gt;&amp;#39;untrack log.txt&amp;#39;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;code&gt;.gitignore&lt;/code&gt;에 해당 파일을 추가해 주고 &lt;code&gt;.gitignore&lt;/code&gt;도 commit 해 주면 된다.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;vi .gitignore
+&lt;p&gt;이럴 경우, working directory에는 남겨두고 staging area에서만 삭제해야 하므로 &lt;code class=&quot;highlighter-rouge&quot;&gt;git rm --cached&lt;/code&gt; 명령어로 해당 파일을 더 이상 추적하지 않게 하고 다시 commit을 해 준 다음,&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git rm &lt;span class=&quot;nt&quot;&gt;--cached&lt;/span&gt; log.txt
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git commit &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'untrack log.txt'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;.gitignore&lt;/code&gt;에 해당 파일을 추가해 주고 &lt;code class=&quot;highlighter-rouge&quot;&gt;.gitignore&lt;/code&gt;도 commit 해 주면 된다.&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;vi .gitignore
 ...
 log.txt &lt;span class=&quot;c&quot;&gt;# 추가&lt;/span&gt;
 ...
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git commit -am &lt;span class=&quot;s1&quot;&gt;&amp;#39;ignore log.txt&amp;#39;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git commit &lt;span class=&quot;nt&quot;&gt;-am&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'ignore log.txt'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
         <pubDate>Sat, 05 Sep 2015 00:00:00 +0900</pubDate>
-        <link>http://gumpcha.github.io/blog/gitignore-tracked-file</link>
-        <guid isPermaLink="true">http://gumpcha.github.io/blog/gitignore-tracked-file</guid>
+        <link>http://localhost:4000/blog/gitignore-tracked-file</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/gitignore-tracked-file</guid>
         
         
       </item>
@@ -35,140 +234,158 @@ log.txt &lt;span class=&quot;c&quot;&gt;# 추가&lt;/span&gt;
       <item>
         <title>Github issue에 첨부 image 크기 조절하기</title>
         <description>&lt;p&gt;github issue에 이미지를 끌어다 놓으면 다음과 같은 markdown이 자동으로 생성된다.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;![파일이름](cloud.githubusercontent.com업로드된 URL)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;이 이미지는 width가 100%로 잡히기 때문에 이미지 크기를 조절하고 싶다면 &lt;code&gt;width&lt;/code&gt; attribute를 적용하면 된다.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;lt;img src=&amp;quot;cloud.githubcontents.com에 업로드된 URL&amp;quot; width=&amp;quot;40%&amp;quot;&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;참고로, &lt;code&gt;style&lt;/code&gt; attribute는 안 먹는다.&lt;/p&gt;
 
-&lt;h2&gt;참고&lt;/h2&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;![파일이름](cloud.githubusercontent.com업로드된 URL)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
+&lt;p&gt;이 이미지는 width가 100%로 잡히기 때문에 이미지 크기를 조절하고 싶다면 &lt;code class=&quot;highlighter-rouge&quot;&gt;width&lt;/code&gt; attribute를 적용하면 된다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;img src=&quot;cloud.githubcontents.com에 업로드된 URL&quot; width=&quot;40%&quot;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;참고로, &lt;code class=&quot;highlighter-rouge&quot;&gt;style&lt;/code&gt; attribute는 안 먹는다.&lt;/p&gt;
+
+&lt;h2 id=&quot;참고&quot;&gt;참고&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://stackoverflow.com/a/27830083/2260566&quot;&gt;http://stackoverflow.com/a/27830083/2260566&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://blog.davidebbo.com/2014/11/using-issues-for-github-pages-screenshots.html&quot;&gt;http://blog.davidebbo.com/2014/11/using-issues-for-github-pages-screenshots.html&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;http://stackoverflow.com/a/27830083/2260566&lt;/li&gt;
+  &lt;li&gt;http://blog.davidebbo.com/2014/11/using-issues-for-github-pages-screenshots.html&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Sat, 05 Sep 2015 00:00:00 +0900</pubDate>
-        <link>http://gumpcha.github.io/blog/github-issue-image-resize</link>
-        <guid isPermaLink="true">http://gumpcha.github.io/blog/github-issue-image-resize</guid>
+        <link>http://localhost:4000/blog/github-issue-image-resize</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/github-issue-image-resize</guid>
         
         
       </item>
     
       <item>
         <title>Bootstrap 3 grid system 이해하기</title>
-        <description>&lt;h2&gt;소개&lt;/h2&gt;
+        <description>&lt;h2 id=&quot;소개&quot;&gt;소개&lt;/h2&gt;
 
 &lt;p&gt;Bootstrap 3 grid system은 브라우져 크기에 따라 한 줄에 최대 12 컬럼의 컨텐츠를 어떻게 배치할 것인가를 정해주고,
 기본 구조는 다음과 같아야 한다.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;.container
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.container
   .row
     .col-xs-#
     .col-xs-#
   .row
     .col-xs-#
     .col-xs-#
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;Column class는 브라우져 크기에 따라 다음 네 가지로 정의된다.&lt;/p&gt;
 
-&lt;table&gt;&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Column class&lt;/th&gt;
-&lt;th&gt;Desc.&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;.col-xs-#&lt;/td&gt;
-&lt;td&gt;Extra Small(핸드폰, 768px 이하)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;.col-sm-#&lt;/td&gt;
-&lt;td&gt;Small(태블릿, 768px 이상)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;.col-md-#&lt;/td&gt;
-&lt;td&gt;Medium(데스크탑, 992px 이상)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;.col-lg-#&lt;/td&gt;
-&lt;td&gt;Large(데스크탑, 1200px 이상)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;&lt;/table&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Column class&lt;/th&gt;
+      &lt;th&gt;Desc.&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;.col-xs-#&lt;/td&gt;
+      &lt;td&gt;Extra Small(핸드폰, 768px 이하)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;.col-sm-#&lt;/td&gt;
+      &lt;td&gt;Small(태블릿, 768px 이상)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;.col-md-#&lt;/td&gt;
+      &lt;td&gt;Medium(데스크탑, 992px 이상)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;.col-lg-#&lt;/td&gt;
+      &lt;td&gt;Large(데스크탑, 1200px 이상)&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
 
 &lt;p&gt;알아둘 것&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;1 row에 12 column이 넘어가면 자동으로 다음 row로 처리된다.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Mobile first&lt;/strong&gt; 정책이므로, 아무것도 지정하지 않으면 &lt;code&gt;.col-xs-12&lt;/code&gt;가 지정된다.&lt;/li&gt;
+  &lt;li&gt;1 row에 12 column이 넘어가면 자동으로 다음 row로 처리된다.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Mobile first&lt;/strong&gt; 정책이므로, 아무것도 지정하지 않으면 &lt;code class=&quot;highlighter-rouge&quot;&gt;.col-xs-12&lt;/code&gt;가 지정된다.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2&gt;예제&lt;/h2&gt;
+&lt;h2 id=&quot;예제&quot;&gt;예제&lt;/h2&gt;
 
 &lt;p&gt;총 4개의 column을 사이즈별로 다음처럼 구성하고 싶은 경우&lt;/p&gt;
 
 &lt;ol&gt;
-&lt;li&gt;모바일에서는 한 줄에 1 컬럼&lt;/li&gt;
-&lt;li&gt;태블릿과 Medium 데스크탑에서는 한 줄에 2 컬럼&lt;/li&gt;
-&lt;li&gt;Large 데스크탑에서는 한 줄에 4 컬럼&lt;/li&gt;
+  &lt;li&gt;모바일에서는 한 줄에 1 컬럼&lt;/li&gt;
+  &lt;li&gt;태블릿과 Medium 데스크탑에서는 한 줄에 2 컬럼&lt;/li&gt;
+  &lt;li&gt;Large 데스크탑에서는 한 줄에 4 컬럼&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;p&gt;이렇게 지정하면&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;lt;div class=&amp;quot;row&amp;quot;&amp;gt;
-    &amp;lt;div class=&amp;quot;col-sm-6 col-lg-3&amp;quot;&amp;gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;div class=&quot;row&quot;&amp;gt;
+    &amp;lt;div class=&quot;col-sm-6 col-lg-3&quot;&amp;gt;
         column 1
     &amp;lt;/div&amp;gt;
-    &amp;lt;div class=&amp;quot;col-sm-6 col-lg-3&amp;quot;&amp;gt;
+    &amp;lt;div class=&quot;col-sm-6 col-lg-3&quot;&amp;gt;
         column 2
     &amp;lt;/div&amp;gt;
-    &amp;lt;div class=&amp;quot;col-sm-6 col-lg-3&amp;quot;&amp;gt;
+    &amp;lt;div class=&quot;col-sm-6 col-lg-3&quot;&amp;gt;
         column 3
     &amp;lt;/div&amp;gt;
-    &amp;lt;div class=&amp;quot;col-sm-6 col-lg-3&amp;quot;&amp;gt;
+    &amp;lt;div class=&quot;col-sm-6 col-lg-3&quot;&amp;gt;
         column 4
     &amp;lt;/div&amp;gt;
 &amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;모바일에서는 &lt;code&gt;.col-xs&lt;/code&gt;를 따로 지정하지 않았기 때문에 디폴트로 &lt;code&gt;.col-xs-12&lt;/code&gt;가 적용되고&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;| column 1 |
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;모바일에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;.col-xs&lt;/code&gt;를 따로 지정하지 않았기 때문에 디폴트로 &lt;code class=&quot;highlighter-rouge&quot;&gt;.col-xs-12&lt;/code&gt;가 적용되고&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;| column 1 |
 | column 2 |
 | column 3 |
 | column 4 |
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;태블릿과 Medium 데스크탑에서는 &lt;code&gt;.col-sm-6&lt;/code&gt;가 적용되며&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;| column 1 | column 2 |
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;태블릿과 Medium 데스크탑에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;.col-sm-6&lt;/code&gt;가 적용되며&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;| column 1 | column 2 |
 | column 3 | column 4 |
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Large 데스크탑에서는 &lt;code&gt;.col-lg-3&lt;/code&gt;이 적용된다.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;| column 1 | column 2 | column 3 | column 4 |
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h2&gt;참조&lt;/h2&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Large 데스크탑에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;.col-lg-3&lt;/code&gt;이 적용된다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;| column 1 | column 2 | column 3 | column 4 |
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;참조&quot;&gt;참조&lt;/h2&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://scotch.io/tutorials/understanding-the-bootstrap-3-grid-system&quot;&gt;Understanding the Bootstrap 3 Grid System&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://getbootstrap.com/css/#grid&quot;&gt;Bootstrap grid system 공식 설명&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://getbootstrap.com/examples/grid&quot;&gt;Bootstrap grid system 공식 예제&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://scotch.io/tutorials/understanding-the-bootstrap-3-grid-system&quot;&gt;Understanding the Bootstrap 3 Grid System&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://getbootstrap.com/css/#grid&quot;&gt;Bootstrap grid system 공식 설명&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://getbootstrap.com/examples/grid&quot;&gt;Bootstrap grid system 공식 예제&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Wed, 03 Jun 2015 00:00:00 +0900</pubDate>
-        <link>http://gumpcha.github.io/blog/bootstrap-grid-system</link>
-        <guid isPermaLink="true">http://gumpcha.github.io/blog/bootstrap-grid-system</guid>
+        <link>http://localhost:4000/blog/bootstrap-grid-system</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/bootstrap-grid-system</guid>
         
         
       </item>
     
       <item>
         <title>Vim에서 여러 명령어 동시에 실행하기</title>
-        <description>&lt;p&gt;&lt;code&gt;|&lt;/code&gt;를 쓰면 된다.&lt;/p&gt;
+        <description>&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;|&lt;/code&gt;를 쓰면 된다.&lt;/p&gt;
 
 &lt;p&gt;예를 들어, 전체 내용 중 one을 ONE으로 바꾸고, two를 TWO로 바꾸고, 빈 줄을 지우려면&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;:%s/one/ONE/g | %s/two/TWO/g | g/^$/d
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;:%s/one/ONE/g | %s/two/TWO/g | g/^$/d
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;라고 하면 된다.&lt;/p&gt;
 </description>
         <pubDate>Wed, 29 Apr 2015 00:00:00 +0900</pubDate>
-        <link>http://gumpcha.github.io/blog/vim-multiple-command</link>
-        <guid isPermaLink="true">http://gumpcha.github.io/blog/vim-multiple-command</guid>
+        <link>http://localhost:4000/blog/vim-multiple-command</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/vim-multiple-command</guid>
         
         
       </item>
@@ -177,257 +394,296 @@ log.txt &lt;span class=&quot;c&quot;&gt;# 추가&lt;/span&gt;
         <title>slack.com 특정 채널에 메세지 보내기</title>
         <description>&lt;p&gt;몇 가지 방법이 있는 것 같은데, 두 가지만 정리해 본다.&lt;/p&gt;
 
-&lt;h1&gt;&lt;a href=&quot;https://my.slack.com/services/new/slackbot&quot;&gt;Slackbot Remote Integration&lt;/a&gt; 사용&lt;/h1&gt;
+&lt;h1 id=&quot;slackbot-remote-integration-사용&quot;&gt;&lt;a href=&quot;https://my.slack.com/services/new/slackbot&quot;&gt;Slackbot Remote Integration&lt;/a&gt; 사용&lt;/h1&gt;
 
 &lt;p&gt;메세지만 보내는 용도라면, Slackbot Remote Integration 방법으로 간단하게 특정 채널로 메세지를 보낼 수 있다.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://my.slack.com/services/new/slackbot&quot;&gt;Slackbot 설정 페이지&lt;/a&gt;에서 &lt;code&gt;Add Slackbot Integration&lt;/code&gt; 클릭하고, 하단 Integration Settings 항목의 &lt;code&gt;Webhook URL&lt;/code&gt;에 &lt;code&gt;channel&lt;/code&gt; 파라미터 추가해 HTTP POST 전송하면 된다.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://my.slack.com/services/new/slackbot&quot;&gt;Slackbot 설정 페이지&lt;/a&gt;에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;Add Slackbot Integration&lt;/code&gt; 클릭하고, 하단 Integration Settings 항목의 &lt;code class=&quot;highlighter-rouge&quot;&gt;Webhook URL&lt;/code&gt;에 &lt;code class=&quot;highlighter-rouge&quot;&gt;channel&lt;/code&gt; 파라미터 추가해 HTTP POST 전송하면 된다.&lt;/p&gt;
 
 &lt;p&gt;팀 이름이 example인 경우의 curl 예제(대문자는 파라미터)&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl --data &lt;span class=&quot;s2&quot;&gt;&amp;quot;CHAT_MESSAGE&amp;quot;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;https://EXAMPLE.slack.com/services/hooks/slackbot?token=TOKEN&amp;amp;channel=%23CHANNEL_NAME&amp;#39;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h1&gt;&lt;a href=&quot;https://api.slack.com/web&quot;&gt;Web API&lt;/a&gt; 사용&lt;/h1&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;--data&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;CHAT_MESSAGE&quot;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'https://EXAMPLE.slack.com/services/hooks/slackbot?token=TOKEN&amp;amp;channel=%23CHANNEL_NAME'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;web-api-사용&quot;&gt;&lt;a href=&quot;https://api.slack.com/web&quot;&gt;Web API&lt;/a&gt; 사용&lt;/h1&gt;
 
 &lt;p&gt;사용자 관리, 채널 관리, Direct Message 관리, 채팅 메세지 관리 등을 할 수 있는 &lt;a href=&quot;https://api.slack.com/web&quot;&gt;Web API&lt;/a&gt;를 써서 메세지를 보낼 수도 있다. Slackbot Remote Integration과는 다르게 사용자 이름이나 기타 설정등을 변경할 수 있는 등, 세밀한 제어가 필요한 경우 사용하면 되겠다.&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://api.slack.com/web&quot;&gt;Web API&lt;/a&gt; 페이지에서 token을 생성한 다음, &lt;a href=&quot;https://api.slack.com/methods/chat.postMessage&quot;&gt;메세지 포스팅에 필요한 파라미터&lt;/a&gt;를 설정해서 HTTP POST로 전송한다.&lt;/p&gt;
 
-&lt;p&gt;채널명은 &lt;code&gt;#&lt;/code&gt;이 붙은 &lt;code&gt;#channel_name&lt;/code&gt; 형태로 지정해야 된다.&lt;/p&gt;
+&lt;p&gt;채널명은 &lt;code class=&quot;highlighter-rouge&quot;&gt;#&lt;/code&gt;이 붙은 &lt;code class=&quot;highlighter-rouge&quot;&gt;#channel_name&lt;/code&gt; 형태로 지정해야 된다.&lt;/p&gt;
 
 &lt;p&gt;curl 예제(대문자는 파라미터)&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl -X POST -d &lt;span class=&quot;s2&quot;&gt;&amp;quot;token=TOKEN&amp;amp;channel=CHANNEL_NAME&amp;amp;text=CHAT_MESSAGE&amp;amp;username=USERNAME&amp;quot;&lt;/span&gt; https://slack.com/api/chat.postMessage
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-X&lt;/span&gt; POST &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;token=TOKEN&amp;amp;channel=CHANNEL_NAME&amp;amp;text=CHAT_MESSAGE&amp;amp;username=USERNAME&quot;&lt;/span&gt; https://slack.com/api/chat.postMessage
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
         <pubDate>Tue, 24 Mar 2015 00:00:00 +0900</pubDate>
-        <link>http://gumpcha.github.io/blog/slack-post-message</link>
-        <guid isPermaLink="true">http://gumpcha.github.io/blog/slack-post-message</guid>
+        <link>http://localhost:4000/blog/slack-post-message</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/slack-post-message</guid>
         
         
       </item>
     
       <item>
         <title>git에서 symbolic link 파일 처리하기</title>
-        <description>&lt;h2&gt;문제&lt;/h2&gt;
+        <description>&lt;h2 id=&quot;문제&quot;&gt;문제&lt;/h2&gt;
 
-&lt;p&gt;git 저장소에 &lt;strong&gt;저장소 외부의 다른 파일&lt;/strong&gt;을 가르키도록 &lt;code&gt;ln -s&lt;/code&gt;로 symbolic link를 생성하면 저장소 외부 파일의 변경 내역이 관리되지 않는다.&lt;/p&gt;
+&lt;p&gt;git 저장소에 &lt;strong&gt;저장소 외부의 다른 파일&lt;/strong&gt;을 가르키도록 &lt;code class=&quot;highlighter-rouge&quot;&gt;ln -s&lt;/code&gt;로 symbolic link를 생성하면 저장소 외부 파일의 변경 내역이 관리되지 않는다.&lt;/p&gt;
 
-&lt;h2&gt;문제 발생 맥락&lt;/h2&gt;
+&lt;h2 id=&quot;문제-발생-맥락&quot;&gt;문제 발생 맥락&lt;/h2&gt;
 
-&lt;p&gt;블로그 포스팅용 파일(&lt;code&gt;blog-posting.md&lt;/code&gt;)이 블로그 저장소 외부에서 따로 관리하는 파일(&lt;code&gt;~/Wiki/blog-posting.md&lt;/code&gt;)과 중복이 되서, &lt;code&gt;blog-posting.md&lt;/code&gt;가 &lt;code&gt;~/Wiki/blog-posting.md&lt;/code&gt;를 symbolic link하도록 블로그 저장소를 변경했다.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;blog-repo $ rm blog-posting.md
+&lt;p&gt;블로그 포스팅용 파일(&lt;code class=&quot;highlighter-rouge&quot;&gt;blog-posting.md&lt;/code&gt;)이 블로그 저장소 외부에서 따로 관리하는 파일(&lt;code class=&quot;highlighter-rouge&quot;&gt;~/Wiki/blog-posting.md&lt;/code&gt;)과 중복이 되서, &lt;code class=&quot;highlighter-rouge&quot;&gt;blog-posting.md&lt;/code&gt;가 &lt;code class=&quot;highlighter-rouge&quot;&gt;~/Wiki/blog-posting.md&lt;/code&gt;를 symbolic link하도록 블로그 저장소를 변경했다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;blog-repo $ rm blog-posting.md
 blog-repo $ ln -s ~/Wiki/blog-posting.md blog-posting.md
 blog-repo $ git status
 ...
-    typechange: blog-posting.md
+	typechange: blog-posting.md
 ...
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;처음 보는 &lt;code&gt;gis status&lt;/code&gt;의 &lt;code&gt;typechange&lt;/code&gt;라는게 실행 퍼미션 정도가 바뀐 건가 하고, 그냥 commit.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;나중에 git commit history를 보니 파일 내용은 없어지고, &lt;code&gt;~/Wiki/blog-posting.md&lt;/code&gt; 라는 내용만 남아 있다. 실제 내용이야 html 파일로 남아 있긴 하지만 뭔가 찝찝해 해결책을 찾아보기로 했다.&lt;/p&gt;
+&lt;p&gt;처음 보는 &lt;code class=&quot;highlighter-rouge&quot;&gt;gis status&lt;/code&gt;의 &lt;code class=&quot;highlighter-rouge&quot;&gt;typechange&lt;/code&gt;라는게 실행 퍼미션 정도가 바뀐 건가 하고, 그냥 commit.&lt;/p&gt;
+
+&lt;p&gt;나중에 git commit history를 보니 파일 내용은 없어지고, &lt;code class=&quot;highlighter-rouge&quot;&gt;~/Wiki/blog-posting.md&lt;/code&gt; 라는 내용만 남아 있다. 실제 내용이야 html 파일로 남아 있긴 하지만 뭔가 찝찝해 해결책을 찾아보기로 했다.&lt;/p&gt;
 
 &lt;p&gt;위 내용에 대한 실제 커밋은 다음과 같은나 간단한 설명을 위해 파일 이름을 임의로 정해서 설명했다.&lt;/p&gt;
 
 &lt;ol&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/gumpcha/gumpcha.github.io/commit/9851a01b03c85585a4d9d86151e962a5b3b55733&quot;&gt;regular file을 symbolic link로 변경한 커밋&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/gumpcha/gumpcha.github.io/commit/37c96daaa5e6e892a64778efdf879a71477e7c96&quot;&gt;softlink를 hardlink로 바꾼 다음 커밋&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/gumpcha/gumpcha.github.io/commit/9851a01b03c85585a4d9d86151e962a5b3b55733&quot;&gt;regular file을 symbolic link로 변경한 커밋&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/gumpcha/gumpcha.github.io/commit/37c96daaa5e6e892a64778efdf879a71477e7c96&quot;&gt;softlink를 hardlink로 바꾼 다음 커밋&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2&gt;분석&lt;/h2&gt;
+&lt;h2 id=&quot;분석&quot;&gt;분석&lt;/h2&gt;
 
-&lt;p&gt;처음 symbolic link 파일을 만들 때 습관적으로 &lt;code&gt;ln -s&lt;/code&gt;라고 쳐서 softlink 파일이 생성되었고,
+&lt;p&gt;처음 symbolic link 파일을 만들 때 습관적으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;ln -s&lt;/code&gt;라고 쳐서 softlink 파일이 생성되었고,
 git는 softlink된 파일은 파일 내용이 아니라 target file의 &lt;strong&gt;full path&lt;/strong&gt;를 저장한다.&lt;/p&gt;
 
-&lt;p&gt;또한, &lt;code&gt;git status&lt;/code&gt;에 &lt;code&gt;typechange&lt;/code&gt;라고 나오면 symbolic link와 regular file이 서로 바뀐 경우이다.&lt;/p&gt;
+&lt;p&gt;또한, &lt;code class=&quot;highlighter-rouge&quot;&gt;git status&lt;/code&gt;에 &lt;code class=&quot;highlighter-rouge&quot;&gt;typechange&lt;/code&gt;라고 나오면 symbolic link와 regular file이 서로 바뀐 경우이다.&lt;/p&gt;
 
-&lt;h2&gt;해결 방법&lt;/h2&gt;
+&lt;h2 id=&quot;해결-방법&quot;&gt;해결 방법&lt;/h2&gt;
 
 &lt;p&gt;softlink가 아닌 hardlink로 symbolic link를 만들어서 저장소 밖의 원본 파일이 변경되어도 저장소에서 변경 내역을 인식하게 만든다.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;blog-repo $ rm blog-posting.md
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;blog-repo $ rm blog-posting.md
 blog-repo $ ln ~/Wiki/blog-posting.md blog-posting.md
 blog-repo $ git status
 ...
   typechange: blog-posting.md
 ...
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;softlink와 hardlink에 대한 자세한 내용은 &lt;a href=&quot;http://www.geekride.com/hard-link-vs-soft-link/&quot;&gt;Hard Link vs Soft Link&lt;/a&gt;를 참고.&lt;/p&gt;
 </description>
         <pubDate>Thu, 12 Mar 2015 00:00:00 +0900</pubDate>
-        <link>http://gumpcha.github.io/blog/git-symbolic-link</link>
-        <guid isPermaLink="true">http://gumpcha.github.io/blog/git-symbolic-link</guid>
+        <link>http://localhost:4000/blog/git-symbolic-link</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/git-symbolic-link</guid>
         
         
       </item>
     
       <item>
         <title>나만의 PopClip Extension 만들기</title>
-        <description>&lt;h2&gt;0. 목표 및 결과&lt;/h2&gt;
+        <description>&lt;h2 id=&quot;0-목표-및-결과&quot;&gt;0. 목표 및 결과&lt;/h2&gt;
 
-&lt;p&gt;마우스로 선택한 텍스트들을 &lt;code&gt;-&lt;/code&gt;로 시작하는 목록으로 변경해 클립보드에 복사해 놓는 &lt;a href=&quot;https://github.com/gumpcha/my-popclip-extensions/tree/master/HyphenList.popclipext&quot;&gt;&lt;strong&gt;HyphenList&lt;/strong&gt;&lt;/a&gt;라는 extension을 만드는 과정을 설명한다.&lt;/p&gt;
+&lt;p&gt;마우스로 선택한 텍스트들을 &lt;code class=&quot;highlighter-rouge&quot;&gt;- &lt;/code&gt;로 시작하는 목록으로 변경해 클립보드에 복사해 놓는 &lt;a href=&quot;https://github.com/gumpcha/my-popclip-extensions/tree/master/HyphenList.popclipext&quot;&gt;&lt;strong&gt;HyphenList&lt;/strong&gt;&lt;/a&gt;라는 extension을 만드는 과정을 설명한다.&lt;/p&gt;
 
-&lt;h2&gt;1. 템플릿 준비 - &lt;a href=&quot;https://github.com/gumpcha/my-popclip-extensions/commit/1be4d61a2b1f5ae92e66564bc365d54a930c9464&quot;&gt;관련 커밋&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;1-템플릿-준비---관련-커밋&quot;&gt;1. 템플릿 준비 - &lt;a href=&quot;https://github.com/gumpcha/my-popclip-extensions/commit/1be4d61a2b1f5ae92e66564bc365d54a930c9464&quot;&gt;관련 커밋&lt;/a&gt;&lt;/h2&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://github.com/pilotmoon/PopClip-Extensions#general-overview&quot;&gt;공식 문서의 General Overview 섹션&lt;/a&gt;을 보면 PopClip extension은 다섯 가지 타입의 Action이 가능하다.&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Service: 선택된 텍스트를 Mac OS X Service에게 넘김&lt;/li&gt;
-&lt;li&gt;AppleScript: 선택된 텍스트를 AppleScript에게 넘김&lt;/li&gt;
-&lt;li&gt;Shell Script: 선택된 텍스트를 Shell Script에게 넘김&lt;/li&gt;
-&lt;li&gt;URL: 선택된 텍스트를 URL encoding해서 특정 URL 호출&lt;/li&gt;
-&lt;li&gt;Keypress: 특정 키 조합을 누름&lt;/li&gt;
+  &lt;li&gt;Service: 선택된 텍스트를 Mac OS X Service에게 넘김&lt;/li&gt;
+  &lt;li&gt;AppleScript: 선택된 텍스트를 AppleScript에게 넘김&lt;/li&gt;
+  &lt;li&gt;Shell Script: 선택된 텍스트를 Shell Script에게 넘김&lt;/li&gt;
+  &lt;li&gt;URL: 선택된 텍스트를 URL encoding해서 특정 URL 호출&lt;/li&gt;
+  &lt;li&gt;Keypress: 특정 키 조합을 누름&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;여기서는 간단하게 &lt;code&gt;sed&lt;/code&gt;를 쓸 것이기 때문에 Shell Script 타입의 샘플 Extension인 &lt;a href=&quot;https://github.com/pilotmoon/PopClip-Extensions/tree/master/source/Say&quot;&gt;Say&lt;/a&gt;를 템플릿으로 사용한다.&lt;/p&gt;
+&lt;p&gt;여기서는 간단하게 &lt;code class=&quot;highlighter-rouge&quot;&gt;sed&lt;/code&gt;를 쓸 것이기 때문에 Shell Script 타입의 샘플 Extension인 &lt;a href=&quot;https://github.com/pilotmoon/PopClip-Extensions/tree/master/source/Say&quot;&gt;Say&lt;/a&gt;를 템플릿으로 사용한다.&lt;/p&gt;
 
-&lt;p&gt;폴더 이름이 &lt;code&gt;.popclipext&lt;/code&gt;란 확장자로 끝나야 Finder에서 더블 클릭을 해서 extension을 설치할 수 있으므로 &lt;code&gt;Say&lt;/code&gt;를 &lt;code&gt;HyphenList.popclipext&lt;/code&gt;라고 이름을 바꿔서 시작한다.&lt;/p&gt;
+&lt;p&gt;폴더 이름이 &lt;code class=&quot;highlighter-rouge&quot;&gt;.popclipext&lt;/code&gt;란 확장자로 끝나야 Finder에서 더블 클릭을 해서 extension을 설치할 수 있으므로 &lt;code class=&quot;highlighter-rouge&quot;&gt;Say&lt;/code&gt;를 &lt;code class=&quot;highlighter-rouge&quot;&gt;HyphenList.popclipext&lt;/code&gt;라고 이름을 바꿔서 시작한다.&lt;/p&gt;
 
 &lt;p&gt;개인 extension은 디지털 서명 문제 때문에 설치할 때, 설치 여부를 확인하는 창이 계속 뜨는데 이 확인 절차를 건너뛰려면 Terminal 에서 다음 명령어를 치고 PopClip을 재기동 하면 된다.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;defaults write com.pilotmoon.popclip LoadUnsignedExtensions -bool YES
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h2&gt;2. Main Script 작성 - &lt;a href=&quot;https://github.com/gumpcha/my-popclip-extensions/commit/bff167127104692eeb5c5c28f671c7518b9022fa&quot;&gt;관련 커밋&lt;/a&gt;&lt;/h2&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;defaults write com.pilotmoon.popclip LoadUnsignedExtensions &lt;span class=&quot;nt&quot;&gt;-bool&lt;/span&gt; YES
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;2-main-script-작성---관련-커밋&quot;&gt;2. Main Script 작성 - &lt;a href=&quot;https://github.com/gumpcha/my-popclip-extensions/commit/bff167127104692eeb5c5c28f671c7518b9022fa&quot;&gt;관련 커밋&lt;/a&gt;&lt;/h2&gt;
 
 &lt;ol&gt;
-&lt;li&gt;Main Script 이름은 &lt;code&gt;add-hyphens.sh&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;PopClip은 선택된 텍스트를 &lt;code&gt;$POPCLIP_TEXT&lt;/code&gt; 환경 변수에 담아 &lt;code&gt;add-hyphens.sh&lt;/code&gt;을 호출&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;add-hyphens.sh&lt;/code&gt;에서는 &lt;code&gt;sed&lt;/code&gt;를 써서 &lt;code&gt;$POPCLIP_TEXT&lt;/code&gt;의 모든 줄 처음에 &lt;code&gt;-&lt;/code&gt;를 추가&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;최종 &lt;code&gt;add-hyphens.sh&lt;/code&gt; 쉘 스크립트는 다음과 같고&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;$POPCLIP_TEXT&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; sed &lt;span class=&quot;s1&quot;&gt;&amp;#39;s/^/- /&amp;#39;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;테스트는 이렇게 해 본다&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ POPCLIP_TEXT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;123\n456\n789&amp;quot;&lt;/span&gt; ./add-hyphens.sh
-- 123
-- 456
-- 789
-&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+  &lt;li&gt;Main Script 이름은 &lt;code class=&quot;highlighter-rouge&quot;&gt;add-hyphens.sh&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;PopClip은 선택된 텍스트를 &lt;code class=&quot;highlighter-rouge&quot;&gt;$POPCLIP_TEXT&lt;/code&gt; 환경 변수에 담아 &lt;code class=&quot;highlighter-rouge&quot;&gt;add-hyphens.sh&lt;/code&gt;을 호출&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;add-hyphens.sh&lt;/code&gt;에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;sed&lt;/code&gt;를 써서 &lt;code class=&quot;highlighter-rouge&quot;&gt;$POPCLIP_TEXT&lt;/code&gt;의 모든 줄 처음에 &lt;code class=&quot;highlighter-rouge&quot;&gt;- &lt;/code&gt;를 추가&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;최종 &lt;code class=&quot;highlighter-rouge&quot;&gt;add-hyphens.sh&lt;/code&gt; 쉘 스크립트는 다음과 같고&lt;/p&gt;
+
+    &lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$POPCLIP_TEXT&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; | sed &lt;span class=&quot;s1&quot;&gt;'s/^/- /'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;테스트는 이렇게 해 본다&lt;/p&gt;
+
+    &lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;nv&quot;&gt;$ POPCLIP_TEXT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;123&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;456&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;789&quot;&lt;/span&gt; ./add-hyphens.sh
+ - 123
+ - 456
+ - 789
+ &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2&gt;3. Config.plist 수정&lt;/h2&gt;
+&lt;h2 id=&quot;3-configplist-수정&quot;&gt;3. Config.plist 수정&lt;/h2&gt;
 
-&lt;p&gt;남은 일은 &lt;code&gt;Config.plist&lt;/code&gt;에 필요한 내용을 하나씩 수정하면 된다.&lt;/p&gt;
+&lt;p&gt;남은 일은 &lt;code class=&quot;highlighter-rouge&quot;&gt;Config.plist&lt;/code&gt;에 필요한 내용을 하나씩 수정하면 된다.&lt;/p&gt;
 
-&lt;h3&gt;Main Script 이름 적용 - &lt;a href=&quot;https://github.com/gumpcha/my-popclip-extensions/commit/bff167127104692eeb5c5c28f671c7518b9022fa&quot;&gt;관련 커밋&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;main-script-이름-적용---관련-커밋&quot;&gt;Main Script 이름 적용 - &lt;a href=&quot;https://github.com/gumpcha/my-popclip-extensions/commit/bff167127104692eeb5c5c28f671c7518b9022fa&quot;&gt;관련 커밋&lt;/a&gt;&lt;/h3&gt;
 
 &lt;p&gt;작성한 Main Script 이름을 지정해 준다.&lt;/p&gt;
 
-&lt;h3&gt;After Action 지정 - &lt;a href=&quot;https://github.com/gumpcha/my-popclip-extensions/commit/f5262b8915f0fabe1695a8de9bc25b1cffd14899&quot;&gt;관련 커밋&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;after-action-지정---관련-커밋&quot;&gt;After Action 지정 - &lt;a href=&quot;https://github.com/gumpcha/my-popclip-extensions/commit/f5262b8915f0fabe1695a8de9bc25b1cffd14899&quot;&gt;관련 커밋&lt;/a&gt;&lt;/h3&gt;
 
-&lt;p&gt;Main Script가 실행되기 전/후에 수행할 PopClip의 &lt;a href=&quot;https://github.com/pilotmoon/PopClip-Extensions#before-and-after-keys&quot;&gt;Before/After Action&lt;/a&gt; 중, 스크립트가 변환한 텍스트를 clipboard에 복사해 넣으면 되므로, &lt;code&gt;copy-result&lt;/code&gt;로 지정한다.&lt;/p&gt;
+&lt;p&gt;Main Script가 실행되기 전/후에 수행할 PopClip의 &lt;a href=&quot;https://github.com/pilotmoon/PopClip-Extensions#before-and-after-keys&quot;&gt;Before/After Action&lt;/a&gt; 중, 스크립트가 변환한 텍스트를 clipboard에 복사해 넣으면 되므로, &lt;code class=&quot;highlighter-rouge&quot;&gt;copy-result&lt;/code&gt;로 지정한다.&lt;/p&gt;
 
-&lt;p&gt;실행했을 때, 성공하면 &lt;code&gt;Copied&lt;/code&gt;가 표시되고 에러가 난다면 &lt;code&gt;X&lt;/code&gt;가 표시된다.&lt;/p&gt;
+&lt;p&gt;실행했을 때, 성공하면 &lt;code class=&quot;highlighter-rouge&quot;&gt;Copied&lt;/code&gt;가 표시되고 에러가 난다면 &lt;code class=&quot;highlighter-rouge&quot;&gt;X&lt;/code&gt;가 표시된다.&lt;/p&gt;
 
-&lt;h3&gt;Extension Identifier 변경 - &lt;a href=&quot;https://github.com/gumpcha/my-popclip-extensions/commit/efa64f2889b85e745be0c06158f41032cc7ffce8&quot;&gt;관련 커밋&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;extension-identifier-변경---관련-커밋&quot;&gt;Extension Identifier 변경 - &lt;a href=&quot;https://github.com/gumpcha/my-popclip-extensions/commit/efa64f2889b85e745be0c06158f41032cc7ffce8&quot;&gt;관련 커밋&lt;/a&gt;&lt;/h3&gt;
 
 &lt;p&gt;Reverse DNS 스타일의 prefix 지정.&lt;/p&gt;
 
-&lt;h3&gt;Name/Description - &lt;a href=&quot;https://github.com/gumpcha/my-popclip-extensions/commit/56d20014e1d606b78ee2d72d2bcae7036a09c3e6&quot;&gt;관련 커밋&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;namedescription---관련-커밋&quot;&gt;Name/Description - &lt;a href=&quot;https://github.com/gumpcha/my-popclip-extensions/commit/56d20014e1d606b78ee2d72d2bcae7036a09c3e6&quot;&gt;관련 커밋&lt;/a&gt;&lt;/h3&gt;
 
 &lt;p&gt;이름, 설명 지정.&lt;/p&gt;
 
-&lt;h3&gt;Icon 변경 - &lt;a href=&quot;https://github.com/gumpcha/my-popclip-extensions/commit/0dcc7c462008285f2faf523e4b6b32d51fa1ad82&quot;&gt;관련 커밋&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;icon-변경---관련-커밋&quot;&gt;Icon 변경 - &lt;a href=&quot;https://github.com/gumpcha/my-popclip-extensions/commit/0dcc7c462008285f2faf523e4b6b32d51fa1ad82&quot;&gt;관련 커밋&lt;/a&gt;&lt;/h3&gt;
 
-&lt;p&gt;아이콘은 PopClip popup 화면이나 설정 화면에서 필요하고, 최소 256x256 픽셀의 PNG 파일이면 된다. 여기선 &lt;a href=&quot;http://simpleicon.com/list.html&quot;&gt;http://simpleicon.com/list.html&lt;/a&gt; 의 아이콘을 가져다 쓴다.&lt;/p&gt;
+&lt;p&gt;아이콘은 PopClip popup 화면이나 설정 화면에서 필요하고, 최소 256x256 픽셀의 PNG 파일이면 된다. 여기선 http://simpleicon.com/list.html 의 아이콘을 가져다 쓴다.&lt;/p&gt;
 
-&lt;h2&gt;4. 참고&lt;/h2&gt;
+&lt;h2 id=&quot;4-참고&quot;&gt;4. 참고&lt;/h2&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/pilotmoon/PopClip-Extensions&quot;&gt;Official PopClip Extensions Document&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://computers.tutsplus.com/tutorials/create-your-own-custom-extension-for-popclip--mac-50637&quot;&gt;Create Your Own Custom Extension for PopClip&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/pilotmoon/PopClip-Extensions&quot;&gt;Official PopClip Extensions Document&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://computers.tutsplus.com/tutorials/create-your-own-custom-extension-for-popclip--mac-50637&quot;&gt;Create Your Own Custom Extension for PopClip&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Sat, 07 Mar 2015 00:00:00 +0900</pubDate>
-        <link>http://gumpcha.github.io/blog/custom-popclip-extension</link>
-        <guid isPermaLink="true">http://gumpcha.github.io/blog/custom-popclip-extension</guid>
+        <link>http://localhost:4000/blog/custom-popclip-extension</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/custom-popclip-extension</guid>
         
         
       </item>
     
       <item>
         <title>Github Pages에 Jekyll custom plugin 적용하기</title>
-        <description>&lt;h2&gt;TL;DR&lt;/h2&gt;
+        <description>&lt;h2 id=&quot;tldr&quot;&gt;TL;DR&lt;/h2&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://pages.github.com/versions/&quot;&gt;Github Pages에서 지원하는 Jekyll plugin&lt;/a&gt;외의 것을 쓰려면
-최종 html/css/js 파일이 들어가는 &lt;code&gt;_site&lt;/code&gt; 디렉토리를 &lt;code&gt;master&lt;/code&gt; branch로 변경한다.&lt;/p&gt;
+최종 html/css/js 파일이 들어가는 &lt;code class=&quot;highlighter-rouge&quot;&gt;_site&lt;/code&gt; 디렉토리를 &lt;code class=&quot;highlighter-rouge&quot;&gt;master&lt;/code&gt; branch로 변경한다.&lt;/p&gt;
 
-&lt;h2&gt;히스토리&lt;/h2&gt;
+&lt;h2 id=&quot;히스토리&quot;&gt;히스토리&lt;/h2&gt;
 
 &lt;p&gt;다음 내용은 &lt;a href=&quot;https://github.com/gumpcha/gumpcha.github.io/issues/2&quot;&gt;블로그 이슈&lt;/a&gt;에서 진행된 내용을 정리했다.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;http://gumpcha.github.io/blog/mac-sleep-restart-shutdown/&quot;&gt;두 번째 블로그&lt;/a&gt; 글을 올리고 혹시나 해서 윈도우에서 확인해 보니, 애플 아이콘이 깨져서 안 보인다. 검색해 보니 unicode 문제라고 하고, 웹에 게시할 때는 쓰지 말라고 해서 &lt;code&gt;font-awesome&lt;/code&gt;의 애플 아이콘을 적용하면 되겠다 싶었다.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://gumpcha.github.io/blog/mac-sleep-restart-shutdown/&quot;&gt;두 번째 블로그&lt;/a&gt; 글을 올리고 혹시나 해서 윈도우에서 확인해 보니, 애플 아이콘이 깨져서 안 보인다. 검색해 보니 unicode 문제라고 하고, 웹에 게시할 때는 쓰지 말라고 해서 &lt;code class=&quot;highlighter-rouge&quot;&gt;font-awesome&lt;/code&gt;의 애플 아이콘을 적용하면 되겠다 싶었다.&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;http://ryancmorrissey.com/blog/2014/01/25/font-awesome-icons-jekyll-tag-plugin/&quot;&gt;Font Awesome icons Jekyll tag plugin&lt;/a&gt;을 설치하고 다음과 같이 수정했다.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;-- sleep: &amp;lt;U+F8FF&amp;gt; -&amp;gt; Sleep
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;-- sleep: &amp;lt;U+F8FF&amp;gt; -&amp;gt; Sleep
 -- restart: &amp;lt;U+F8FF&amp;gt; -&amp;gt; Restart
 -- shutdown: &amp;lt;U+F8FF&amp;gt; -&amp;gt; Shut Down
-+- sleep: &amp;lt;i class=&amp;quot;fa fa-apple&amp;quot;&amp;gt;&amp;lt;/i&amp;gt; -&amp;gt; Sleep
-+- restart: &amp;lt;i class=&amp;quot;fa fa-apple&amp;quot;&amp;gt;&amp;lt;/i&amp;gt; -&amp;gt; Restart
-+- shutdown: &amp;lt;i class=&amp;quot;fa fa-apple&amp;quot;&amp;gt;&amp;lt;/i&amp;gt; -&amp;gt; Shut Down
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;local에서 확인하니 잘 나와서 &lt;code&gt;push&lt;/code&gt;를 했는데 github에서 메일이 한 통 날라온다.&lt;/p&gt;
++- sleep: &amp;lt;i class=&quot;fa fa-apple&quot;&amp;gt;&amp;lt;/i&amp;gt; -&amp;gt; Sleep
++- restart: &amp;lt;i class=&quot;fa fa-apple&quot;&amp;gt;&amp;lt;/i&amp;gt; -&amp;gt; Restart
++- shutdown: &amp;lt;i class=&quot;fa fa-apple&quot;&amp;gt;&amp;lt;/i&amp;gt; -&amp;gt; Shut Down
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;local에서 확인하니 잘 나와서 &lt;code class=&quot;highlighter-rouge&quot;&gt;push&lt;/code&gt;를 했는데 github에서 메일이 한 통 날라온다.&lt;/p&gt;
 
 &lt;blockquote&gt;
-&lt;p&gt;The page build failed with the following error:&lt;/p&gt;
+  &lt;p&gt;The page build failed with the following error:&lt;/p&gt;
 
-&lt;p&gt;The tag &lt;code&gt;icon&lt;/code&gt; in &lt;code&gt;_posts/2014-12-23-mac-sleep-restart-shutdown.md&lt;/code&gt; is not a recognized Liquid tag. For more information, see &lt;a href=&quot;https://help.github.com/articles/page-build-failed-unknown-tag-error&quot;&gt;https://help.github.com/articles/page-build-failed-unknown-tag-error&lt;/a&gt;.&lt;/p&gt;
+  &lt;p&gt;The tag &lt;code class=&quot;highlighter-rouge&quot;&gt;icon&lt;/code&gt; in &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts/2014-12-23-mac-sleep-restart-shutdown.md&lt;/code&gt; is not a recognized Liquid tag. For more information, see https://help.github.com/articles/page-build-failed-unknown-tag-error.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;github pages는 새로 push가 되면 보안 문제 때문에 &lt;code&gt;--safe&lt;/code&gt; 모드로 jekyll processing을 하기 때문에 github가 제공하는 plugin이 아니면 liquid tag를 인식하지 못 하는 문제이다.&lt;/p&gt;
+&lt;p&gt;github pages는 새로 push가 되면 보안 문제 때문에 &lt;code class=&quot;highlighter-rouge&quot;&gt;--safe&lt;/code&gt; 모드로 jekyll processing을 하기 때문에 github가 제공하는 plugin이 아니면 liquid tag를 인식하지 못 하는 문제이다.&lt;/p&gt;
 
-&lt;p&gt;해결 방법을 말로 설명하면, 로컬에서 &lt;code&gt;jekyll build&lt;/code&gt;나 &lt;code&gt;jekyll serve&lt;/code&gt;를 해서 &lt;code&gt;_site&lt;/code&gt; 디렉토리에 최종 html/css/js 파일을 생성한 다음 push를 해야 되는 상황.&lt;/p&gt;
+&lt;p&gt;해결 방법을 말로 설명하면, 로컬에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll build&lt;/code&gt;나 &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;를 해서 &lt;code class=&quot;highlighter-rouge&quot;&gt;_site&lt;/code&gt; 디렉토리에 최종 html/css/js 파일을 생성한 다음 push를 해야 되는 상황.&lt;/p&gt;
 
 &lt;p&gt;기술적인 해결법은 sources 브랜치에서 편집/작성한 글을 _site 디렉토리에 생성한 다음 _site 디렉토리를 master 브랜치로 설정하면 된다.&lt;/p&gt;
 
-&lt;h2&gt;사전 작업&lt;/h2&gt;
+&lt;h2 id=&quot;사전-작업&quot;&gt;사전 작업&lt;/h2&gt;
 
 &lt;ol&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;.gitignore&lt;/code&gt;에서 _site 삭제하고 _site 전체를 &lt;code&gt;git add&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;master&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;vi .gitignore
-... delete _site
-&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;master&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git add .gitignore _site
-&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;master&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git ci -m &lt;span class=&quot;s1&quot;&gt;&amp;#39;Prepare source/master branch for custom jekyll plugin&amp;#39;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;source branch를 생성하고 기존의 master와 함께 push&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;master&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git checkout -b &lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git push --all
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;웹으로 github 저장소 &lt;code&gt;Settings&lt;/code&gt; 메뉴로 들어가 Default branch를 source로 변경&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;local에서 remote 저장소의 default branch 적용&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git remote &lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt;-head origin -a
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;local/remote의 master branch 모두 삭제&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git push origin :master
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git branch -d master
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;.gitignore&lt;/code&gt;에서 _site 삭제하고 _site 전체를 &lt;code class=&quot;highlighter-rouge&quot;&gt;git add&lt;/code&gt;&lt;/p&gt;
+
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;master&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;vi .gitignore
+ ... delete _site
+ &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;master&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git add .gitignore _site
+ &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;master&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git ci &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Prepare source/master branch for custom jekyll plugin'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;source branch를 생성하고 기존의 master와 함께 push&lt;/p&gt;
+
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;master&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git checkout &lt;span class=&quot;nt&quot;&gt;-b&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt;
+ &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git push &lt;span class=&quot;nt&quot;&gt;--all&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;웹으로 github 저장소 &lt;code class=&quot;highlighter-rouge&quot;&gt;Settings&lt;/code&gt; 메뉴로 들어가 Default branch를 source로 변경&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;local에서 remote 저장소의 default branch 적용&lt;/p&gt;
+
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git remote set-head origin &lt;span class=&quot;nt&quot;&gt;-a&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;local/remote의 master branch 모두 삭제&lt;/p&gt;
+
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git push origin :master
+ &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git branch &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; master
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2&gt;최종 Workflow&lt;/h2&gt;
+&lt;h2 id=&quot;최종-workflow&quot;&gt;최종 Workflow&lt;/h2&gt;
 
 &lt;ol&gt;
-&lt;li&gt;&lt;code&gt;source&lt;/code&gt; branch에서 새 글을 작성하거나, 사이트 내용 변경&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;jekyll serve&lt;/code&gt;로 내용 확인&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;추가/변경된 내용 commit&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git commit -am &lt;span class=&quot;s1&quot;&gt;&amp;#39;Add new post&amp;#39;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;_site를 master branch로 재적용. 사전 준비가 끝나고 나서 처음 push할 때는 local에 master가 없으므로 &lt;code&gt;git branch -d master&lt;/code&gt;는 건너뜀&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git branch -D master
-&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git checkout -b master
-&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;master&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git filter-branch --subdirectory-filter _site/ -f
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;source/master branch 모두 push&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;master&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git push --all
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;source&lt;/code&gt; branch에서 새 글을 작성하거나, 사이트 내용 변경&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;로 내용 확인&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;추가/변경된 내용 commit&lt;/p&gt;
+
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git commit &lt;span class=&quot;nt&quot;&gt;-am&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Add new post'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;_site를 master branch로 재적용. 사전 준비가 끝나고 나서 처음 push할 때는 local에 master가 없으므로 &lt;code class=&quot;highlighter-rouge&quot;&gt;git branch -d master&lt;/code&gt;는 건너뜀&lt;/p&gt;
+
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git branch &lt;span class=&quot;nt&quot;&gt;-D&lt;/span&gt; master
+ &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git checkout &lt;span class=&quot;nt&quot;&gt;-b&lt;/span&gt; master
+ &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;master&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git filter-branch &lt;span class=&quot;nt&quot;&gt;--subdirectory-filter&lt;/span&gt; _site/ &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;source/master branch 모두 push&lt;/p&gt;
+
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;master&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git push &lt;span class=&quot;nt&quot;&gt;--all&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;p&gt;위 Workflow에서 사용하는 여러 명령어들은 git alias나 &lt;a href=&quot;https://github.com/gumpcha/gumpcha.github.io/commit/b487e1bc507981f3b1af210463031cd678bacc4e&quot;&gt;간단한 쉘 스크립트&lt;/a&gt;, &lt;a href=&quot;http://james-oldfield.co/blog/jekyll-plugins-with-gh-pages/&quot;&gt;grunt task&lt;/a&gt;, travis-ci 등을 이용해 한 번에 적용할 수 있다.&lt;/p&gt;
 
-&lt;h2&gt;참고&lt;/h2&gt;
+&lt;h2 id=&quot;참고&quot;&gt;참고&lt;/h2&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://davidensinger.com/2013/04/deploying-jekyll-to-github-pages/&quot;&gt;http://davidensinger.com/2013/04/deploying-jekyll-to-github-pages/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://drewsilcock.co.uk/custom-jekyll-plugins/&quot;&gt;http://drewsilcock.co.uk/custom-jekyll-plugins/&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;http://davidensinger.com/2013/04/deploying-jekyll-to-github-pages/&lt;/li&gt;
+  &lt;li&gt;http://drewsilcock.co.uk/custom-jekyll-plugins/&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Wed, 21 Jan 2015 00:00:00 +0900</pubDate>
-        <link>http://gumpcha.github.io/blog/github-pages-with-jekyll-custom-plugin</link>
-        <guid isPermaLink="true">http://gumpcha.github.io/blog/github-pages-with-jekyll-custom-plugin</guid>
+        <link>http://localhost:4000/blog/github-pages-with-jekyll-custom-plugin</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/github-pages-with-jekyll-custom-plugin</guid>
         
         
       </item>
@@ -437,118 +693,65 @@ blog-repo $ git status
         <description>&lt;p&gt;크게 다음 네 가지 방법이 가능하다.&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;시스템 메뉴&lt;/li&gt;
-&lt;li&gt;전역 단축키&lt;/li&gt;
-&lt;li&gt;Alfred&lt;/li&gt;
-&lt;li&gt;Terminal&lt;/li&gt;
+  &lt;li&gt;시스템 메뉴&lt;/li&gt;
+  &lt;li&gt;전역 단축키&lt;/li&gt;
+  &lt;li&gt;Alfred&lt;/li&gt;
+  &lt;li&gt;Terminal&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2&gt;시스템 메뉴&lt;/h2&gt;
+&lt;h2 id=&quot;시스템-메뉴&quot;&gt;시스템 메뉴&lt;/h2&gt;
 
 &lt;ul&gt;
-&lt;li&gt;sleep: &lt;i class=&quot;fa fa-apple&quot;&gt;&lt;/i&gt; -&amp;gt; Sleep&lt;/li&gt;
-&lt;li&gt;restart: &lt;i class=&quot;fa fa-apple&quot;&gt;&lt;/i&gt; -&amp;gt; Restart&lt;/li&gt;
-&lt;li&gt;shutdown: &lt;i class=&quot;fa fa-apple&quot;&gt;&lt;/i&gt; -&amp;gt; Shut Down&lt;/li&gt;
+  &lt;li&gt;sleep: &lt;i class=&quot;fa fa-apple&quot;&gt;&lt;/i&gt; -&amp;gt; Sleep&lt;/li&gt;
+  &lt;li&gt;restart: &lt;i class=&quot;fa fa-apple&quot;&gt;&lt;/i&gt; -&amp;gt; Restart&lt;/li&gt;
+  &lt;li&gt;shutdown: &lt;i class=&quot;fa fa-apple&quot;&gt;&lt;/i&gt; -&amp;gt; Shut Down&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2&gt;전역 단축키&lt;/h2&gt;
+&lt;h2 id=&quot;전역-단축키&quot;&gt;전역 단축키&lt;/h2&gt;
 
 &lt;ul&gt;
-&lt;li&gt;sleep: &lt;code&gt;command&lt;/code&gt; + &lt;code&gt;option&lt;/code&gt; + &lt;code&gt;power&lt;/code&gt; 혹은 1.5초간 &lt;code&gt;power&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;display sleep: &lt;code&gt;shift&lt;/code&gt; + &lt;code&gt;control&lt;/code&gt; + &lt;code&gt;power&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;restart: &lt;code&gt;command&lt;/code&gt; + &lt;code&gt;control&lt;/code&gt; + &lt;code&gt;power&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;shutdown: &lt;code&gt;command&lt;/code&gt; + &lt;code&gt;control&lt;/code&gt; + &lt;code&gt;option&lt;/code&gt; + &lt;code&gt;power&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;sleep/restart/shutdown 선택 창: &lt;code&gt;control&lt;/code&gt; + &lt;code&gt;power&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;sleep: &lt;code class=&quot;highlighter-rouge&quot;&gt;command&lt;/code&gt; + &lt;code class=&quot;highlighter-rouge&quot;&gt;option&lt;/code&gt; + &lt;code class=&quot;highlighter-rouge&quot;&gt;power&lt;/code&gt; 혹은 1.5초간 &lt;code class=&quot;highlighter-rouge&quot;&gt;power&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;display sleep: &lt;code class=&quot;highlighter-rouge&quot;&gt;shift&lt;/code&gt; + &lt;code class=&quot;highlighter-rouge&quot;&gt;control&lt;/code&gt; + &lt;code class=&quot;highlighter-rouge&quot;&gt;power&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;restart: &lt;code class=&quot;highlighter-rouge&quot;&gt;command&lt;/code&gt; + &lt;code class=&quot;highlighter-rouge&quot;&gt;control&lt;/code&gt; + &lt;code class=&quot;highlighter-rouge&quot;&gt;power&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;shutdown: &lt;code class=&quot;highlighter-rouge&quot;&gt;command&lt;/code&gt; + &lt;code class=&quot;highlighter-rouge&quot;&gt;control&lt;/code&gt; + &lt;code class=&quot;highlighter-rouge&quot;&gt;option&lt;/code&gt; + &lt;code class=&quot;highlighter-rouge&quot;&gt;power&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;sleep/restart/shutdown 선택 창: &lt;code class=&quot;highlighter-rouge&quot;&gt;control&lt;/code&gt; + &lt;code class=&quot;highlighter-rouge&quot;&gt;power&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2&gt;Alfred&lt;/h2&gt;
+&lt;h2 id=&quot;alfred&quot;&gt;Alfred&lt;/h2&gt;
 
 &lt;ul&gt;
-&lt;li&gt;sleep: sleep&lt;/li&gt;
-&lt;li&gt;restart: restart&lt;/li&gt;
-&lt;li&gt;shutdown: shutdown&lt;/li&gt;
+  &lt;li&gt;sleep: sleep&lt;/li&gt;
+  &lt;li&gt;restart: restart&lt;/li&gt;
+  &lt;li&gt;shutdown: shutdown&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2&gt;Terminal&lt;/h2&gt;
+&lt;h2 id=&quot;terminal&quot;&gt;Terminal&lt;/h2&gt;
 
 &lt;ul&gt;
-&lt;li&gt;sleep: &lt;code&gt;$ sudo shutdown -s now&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;restart: &lt;code&gt;$ sudo shutdown -r now&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;shutdown: &lt;code&gt;$ sudo shutdown -h now&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;sleep: &lt;code class=&quot;highlighter-rouge&quot;&gt;$ sudo shutdown -s now&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;restart: &lt;code class=&quot;highlighter-rouge&quot;&gt;$ sudo shutdown -r now&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;shutdown: &lt;code class=&quot;highlighter-rouge&quot;&gt;$ sudo shutdown -h now&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;나중에 하기&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;30분 뒤에 shutdown 하기: &lt;code&gt;$ sudo shutdown -h +30&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;특정 시각(2014/12/23 13:30)에 restart 하기: &lt;code&gt;$ sudo shutdown -r 1412231330&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;30분 뒤에 shutdown 하기: &lt;code class=&quot;highlighter-rouge&quot;&gt;$ sudo shutdown -h +30&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;특정 시각(2014/12/23 13:30)에 restart 하기: &lt;code class=&quot;highlighter-rouge&quot;&gt;$ sudo shutdown -r 1412231330&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2&gt;참고&lt;/h2&gt;
+&lt;h2 id=&quot;참고&quot;&gt;참고&lt;/h2&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://support.apple.com/en-us/HT201236&quot;&gt;OS X: Keyboard shortcuts&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.maclife.com/article/columns/terminal_101_properly_shutting_down_your_mac&quot;&gt;Terminal 101: Properly Shutting Down Your Mac
+  &lt;li&gt;&lt;a href=&quot;http://support.apple.com/en-us/HT201236&quot;&gt;OS X: Keyboard shortcuts&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.maclife.com/article/columns/terminal_101_properly_shutting_down_your_mac&quot;&gt;Terminal 101: Properly Shutting Down Your Mac
 &lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://macnews.tistory.com/841&quot;&gt;[간단한 팁] 맥을 가장 빠르게 재시동∙잠자기∙종료시키는 방법 [OS X 10.9.2 개정판]&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://macnews.tistory.com/841&quot;&gt;[간단한 팁] 맥을 가장 빠르게 재시동∙잠자기∙종료시키는 방법 [OS X 10.9.2 개정판]&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Tue, 23 Dec 2014 00:00:00 +0900</pubDate>
-        <link>http://gumpcha.github.io/blog/mac-sleep-restart-shutdown</link>
-        <guid isPermaLink="true">http://gumpcha.github.io/blog/mac-sleep-restart-shutdown</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>쉘에서 계산하기</title>
-        <description>&lt;h1&gt;TL;DR&lt;/h1&gt;
-
-&lt;p&gt;정수만 계산하려면 bash만으로 가능하고, 실수까지 계산하려면 &lt;code&gt;bc&lt;/code&gt;란 유틸리티를 쓰면 된다.&lt;/p&gt;
-
-&lt;h1&gt;정수 계산&lt;/h1&gt;
-
-&lt;p&gt;bash 연산자 expr 사용&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;expr &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt; + &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;        &lt;span class=&quot;c&quot;&gt;# + 앞 뒤에 빈 칸 필요&lt;/span&gt;
-3
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;bash 내장 명령어 let 사용&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;let &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$a&lt;/span&gt;
-1
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;let &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;a+2
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$b&lt;/span&gt;
-3
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;bash 연산자 $((...)) 사용&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;$((&lt;/span&gt;a+2&lt;span class=&quot;k&quot;&gt;))&lt;/span&gt;
-3
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h1&gt;실수 계산&lt;/h1&gt;
-
-&lt;p&gt;&lt;code&gt;bc&lt;/code&gt;란 유틸리티를 사용. 계산 결과가 0 이하이면 .33 처럼 표시되므로 추가적인 0을 붙여줘야 됨.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;1/3&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; bc
-0
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;1/3&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; bc -l
-.33333333333333333333
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;scale=2; 1/3&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; bc -l
-.33
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;scale=4; 1/3&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; bc -l
-.3333
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bc -l &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;scale=2; 1/3&amp;quot;&lt;/span&gt;
-.33
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h1&gt;참고&lt;/h1&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://www.shell-tips.com/2010/06/14/performing-math-calculation-in-bash/&quot;&gt;Performing Math calculation in Bash&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.tldp.org/LDP/abs/html/arithexp.html&quot;&gt;Advanced Bash-Scripting Guide - Chapter 13. Arithmetic Expansion&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        <pubDate>Tue, 02 Dec 2014 00:00:00 +0900</pubDate>
-        <link>http://gumpcha.github.io/blog/calculating-in-a-shell</link>
-        <guid isPermaLink="true">http://gumpcha.github.io/blog/calculating-in-a-shell</guid>
+        <link>http://localhost:4000/blog/mac-sleep-restart-shutdown</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/mac-sleep-restart-shutdown</guid>
         
         
       </item>

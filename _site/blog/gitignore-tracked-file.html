@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Github issue에 첨부 image 크기 조절하기</title>
+    <title>git 저장소에 이미 commit 된 파일 무시하기</title>
     <meta name="description" content="저엔트로피를 지향하는 개발자
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://gumpcha.github.io/blog/github-issue-image-resize">
+    <link rel="canonical" href="http://localhost:4000/blog/gitignore-tracked-file">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
@@ -54,25 +54,27 @@
         <div class="post">
 
   <header class="post-header">
-    <h1 class="post-title">Github issue에 첨부 image 크기 조절하기</h1>
+    <h1 class="post-title">git 저장소에 이미 commit 된 파일 무시하기</h1>
     <p class="post-meta">Sep 5, 2015</p>
   </header>
 
   <article class="post-content">
-    <p>github issue에 이미지를 끌어다 놓으면 다음과 같은 markdown이 자동으로 생성된다.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">![파일이름](cloud.githubusercontent.com업로드된 URL)
-</code></pre></div>
-<p>이 이미지는 width가 100%로 잡히기 때문에 이미지 크기를 조절하고 싶다면 <code>width</code> attribute를 적용하면 된다.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;img src=&quot;cloud.githubcontents.com에 업로드된 URL&quot; width=&quot;40%&quot;&gt;
-</code></pre></div>
-<p>참고로, <code>style</code> attribute는 안 먹는다.</p>
+    <p>로그나 바이너리등 git로 관리가 불필요한 파일인데 <code class="highlighter-rouge">.gitignore</code>에 추가하는 것을 빼먹고 이미 commit하는 경우가 있다.</p>
 
-<h2>참고</h2>
+<p>이럴 경우, working directory에는 남겨두고 staging area에서만 삭제해야 하므로 <code class="highlighter-rouge">git rm --cached</code> 명령어로 해당 파일을 더 이상 추적하지 않게 하고 다시 commit을 해 준 다음,</p>
 
-<ul>
-<li><a href="http://stackoverflow.com/a/27830083/2260566">http://stackoverflow.com/a/27830083/2260566</a></li>
-<li><a href="http://blog.davidebbo.com/2014/11/using-issues-for-github-pages-screenshots.html">http://blog.davidebbo.com/2014/11/using-issues-for-github-pages-screenshots.html</a></li>
-</ul>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git rm <span class="nt">--cached</span> log.txt
+<span class="nv">$ </span>git commit <span class="nt">-m</span> <span class="s1">'untrack log.txt'</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">.gitignore</code>에 해당 파일을 추가해 주고 <code class="highlighter-rouge">.gitignore</code>도 commit 해 주면 된다.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>vi .gitignore
+...
+log.txt <span class="c"># 추가</span>
+...
+<span class="nv">$ </span>git commit <span class="nt">-am</span> <span class="s1">'ignore log.txt'</span>
+</code></pre></div></div>
 
   </article>
 

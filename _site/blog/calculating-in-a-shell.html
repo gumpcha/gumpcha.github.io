@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>slack.com 특정 채널에 메세지 보내기</title>
+    <title>쉘에서 계산하기</title>
     <meta name="description" content="저엔트로피를 지향하는 개발자
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://gumpcha.github.io/blog/slack-post-message">
+    <link rel="canonical" href="http://localhost:4000/blog/calculating-in-a-shell">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
@@ -54,33 +54,63 @@
         <div class="post">
 
   <header class="post-header">
-    <h1 class="post-title">slack.com 특정 채널에 메세지 보내기</h1>
-    <p class="post-meta">Mar 24, 2015</p>
+    <h1 class="post-title">쉘에서 계산하기</h1>
+    <p class="post-meta">Dec 2, 2014</p>
   </header>
 
   <article class="post-content">
-    <p>몇 가지 방법이 있는 것 같은데, 두 가지만 정리해 본다.</p>
+    <h1 id="tldr">TL;DR</h1>
 
-<h1><a href="https://my.slack.com/services/new/slackbot">Slackbot Remote Integration</a> 사용</h1>
+<p>정수만 계산하려면 bash만으로 가능하고, 실수까지 계산하려면 <code class="highlighter-rouge">bc</code>란 유틸리티를 쓰면 된다.</p>
 
-<p>메세지만 보내는 용도라면, Slackbot Remote Integration 방법으로 간단하게 특정 채널로 메세지를 보낼 수 있다.</p>
+<h1 id="정수-계산">정수 계산</h1>
 
-<p><a href="https://my.slack.com/services/new/slackbot">Slackbot 설정 페이지</a>에서 <code>Add Slackbot Integration</code> 클릭하고, 하단 Integration Settings 항목의 <code>Webhook URL</code>에 <code>channel</code> 파라미터 추가해 HTTP POST 전송하면 된다.</p>
+<p>bash 연산자 expr 사용</p>
 
-<p>팀 이름이 example인 경우의 curl 예제(대문자는 파라미터)</p>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>curl --data <span class="s2">&quot;CHAT_MESSAGE&quot;</span> <span class="s1">&#39;https://EXAMPLE.slack.com/services/hooks/slackbot?token=TOKEN&amp;channel=%23CHANNEL_NAME&#39;</span>
-</code></pre></div>
-<h1><a href="https://api.slack.com/web">Web API</a> 사용</h1>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>expr 1 + 2        <span class="c"># + 앞 뒤에 빈 칸 필요</span>
+3
+</code></pre></div></div>
 
-<p>사용자 관리, 채널 관리, Direct Message 관리, 채팅 메세지 관리 등을 할 수 있는 <a href="https://api.slack.com/web">Web API</a>를 써서 메세지를 보낼 수도 있다. Slackbot Remote Integration과는 다르게 사용자 이름이나 기타 설정등을 변경할 수 있는 등, 세밀한 제어가 필요한 경우 사용하면 되겠다.</p>
+<p>bash 내장 명령어 let 사용</p>
 
-<p><a href="https://api.slack.com/web">Web API</a> 페이지에서 token을 생성한 다음, <a href="https://api.slack.com/methods/chat.postMessage">메세지 포스팅에 필요한 파라미터</a>를 설정해서 HTTP POST로 전송한다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">let </span><span class="nv">a</span><span class="o">=</span>1
+<span class="nv">$ </span><span class="nb">echo</span> <span class="nv">$a</span>
+1
+<span class="nv">$ </span><span class="nb">let </span><span class="nv">b</span><span class="o">=</span>a+2
+<span class="nv">$ </span><span class="nb">echo</span> <span class="nv">$b</span>
+3
+</code></pre></div></div>
 
-<p>채널명은 <code>#</code>이 붙은 <code>#channel_name</code> 형태로 지정해야 된다.</p>
+<p>bash 연산자 $((…)) 사용</p>
 
-<p>curl 예제(대문자는 파라미터)</p>
-<div class="highlight"><pre><code class="language-sh" data-lang="sh"><span class="nv">$ </span>curl -X POST -d <span class="s2">&quot;token=TOKEN&amp;channel=CHANNEL_NAME&amp;text=CHAT_MESSAGE&amp;username=USERNAME&quot;</span> https://slack.com/api/chat.postMessage
-</code></pre></div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ a</span><span class="o">=</span>1
+<span class="nv">$ </span><span class="nb">echo</span> <span class="k">$((</span>a+2<span class="k">))</span>
+3
+</code></pre></div></div>
+
+<h1 id="실수-계산">실수 계산</h1>
+
+<p><code class="highlighter-rouge">bc</code>란 유틸리티를 사용. 계산 결과가 0 이하이면 .33 처럼 표시되므로 추가적인 0을 붙여줘야 됨.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">"1/3"</span> | bc
+0
+<span class="nv">$ </span><span class="nb">echo</span> <span class="s2">"1/3"</span> | bc <span class="nt">-l</span>
+.33333333333333333333
+<span class="nv">$ </span><span class="nb">echo</span> <span class="s2">"scale=2; 1/3"</span> | bc <span class="nt">-l</span>
+.33
+<span class="nv">$ </span><span class="nb">echo</span> <span class="s2">"scale=4; 1/3"</span> | bc <span class="nt">-l</span>
+.3333
+<span class="nv">$ </span>bc <span class="nt">-l</span> <span class="o">&lt;&lt;&lt;</span> <span class="s2">"scale=2; 1/3"</span>
+.33
+</code></pre></div></div>
+
+<h1 id="참고">참고</h1>
+
+<ul>
+  <li><a href="https://www.shell-tips.com/2010/06/14/performing-math-calculation-in-bash/">Performing Math calculation in Bash</a></li>
+  <li><a href="http://www.tldp.org/LDP/abs/html/arithexp.html">Advanced Bash-Scripting Guide - Chapter 13. Arithmetic Expansion</a></li>
+</ul>
+
   </article>
 
   <div id="disqus_thread"></div>

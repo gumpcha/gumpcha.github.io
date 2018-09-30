@@ -12,9 +12,6 @@ github_username:  gumpcha
 permalink: /blog/:title
 
 # Build settings
-markdown: redcarpet
-redcarpet:
-  extensions: ["autolink", "tables", "fenced_code_blocks", "no_intra_emphasis"]
-
+markdown: kramdown
 exclude: [publish.sh]
 include: [.nojekyll]

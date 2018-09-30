@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>맥(Mac) 잠자기/재기동/종료 방법 총정리</title>
+    <title>slack.com 특정 채널에 메세지 보내기</title>
     <meta name="description" content="저엔트로피를 지향하는 개발자
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://gumpcha.github.io/blog/mac-sleep-restart-shutdown">
+    <link rel="canonical" href="http://localhost:4000/blog/slack-post-message">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
@@ -54,69 +54,36 @@
         <div class="post">
 
   <header class="post-header">
-    <h1 class="post-title">맥(Mac) 잠자기/재기동/종료 방법 총정리</h1>
-    <p class="post-meta">Dec 23, 2014</p>
+    <h1 class="post-title">slack.com 특정 채널에 메세지 보내기</h1>
+    <p class="post-meta">Mar 24, 2015</p>
   </header>
 
   <article class="post-content">
-    <p>크게 다음 네 가지 방법이 가능하다.</p>
+    <p>몇 가지 방법이 있는 것 같은데, 두 가지만 정리해 본다.</p>
 
-<ul>
-<li>시스템 메뉴</li>
-<li>전역 단축키</li>
-<li>Alfred</li>
-<li>Terminal</li>
-</ul>
+<h1 id="slackbot-remote-integration-사용"><a href="https://my.slack.com/services/new/slackbot">Slackbot Remote Integration</a> 사용</h1>
 
-<h2>시스템 메뉴</h2>
+<p>메세지만 보내는 용도라면, Slackbot Remote Integration 방법으로 간단하게 특정 채널로 메세지를 보낼 수 있다.</p>
 
-<ul>
-<li>sleep: <i class="fa fa-apple"></i> -&gt; Sleep</li>
-<li>restart: <i class="fa fa-apple"></i> -&gt; Restart</li>
-<li>shutdown: <i class="fa fa-apple"></i> -&gt; Shut Down</li>
-</ul>
+<p><a href="https://my.slack.com/services/new/slackbot">Slackbot 설정 페이지</a>에서 <code class="highlighter-rouge">Add Slackbot Integration</code> 클릭하고, 하단 Integration Settings 항목의 <code class="highlighter-rouge">Webhook URL</code>에 <code class="highlighter-rouge">channel</code> 파라미터 추가해 HTTP POST 전송하면 된다.</p>
 
-<h2>전역 단축키</h2>
+<p>팀 이름이 example인 경우의 curl 예제(대문자는 파라미터)</p>
 
-<ul>
-<li>sleep: <code>command</code> + <code>option</code> + <code>power</code> 혹은 1.5초간 <code>power</code></li>
-<li>display sleep: <code>shift</code> + <code>control</code> + <code>power</code></li>
-<li>restart: <code>command</code> + <code>control</code> + <code>power</code></li>
-<li>shutdown: <code>command</code> + <code>control</code> + <code>option</code> + <code>power</code></li>
-<li>sleep/restart/shutdown 선택 창: <code>control</code> + <code>power</code></li>
-</ul>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>curl <span class="nt">--data</span> <span class="s2">"CHAT_MESSAGE"</span> <span class="s1">'https://EXAMPLE.slack.com/services/hooks/slackbot?token=TOKEN&amp;channel=%23CHANNEL_NAME'</span>
+</code></pre></div></div>
 
-<h2>Alfred</h2>
+<h1 id="web-api-사용"><a href="https://api.slack.com/web">Web API</a> 사용</h1>
 
-<ul>
-<li>sleep: sleep</li>
-<li>restart: restart</li>
-<li>shutdown: shutdown</li>
-</ul>
+<p>사용자 관리, 채널 관리, Direct Message 관리, 채팅 메세지 관리 등을 할 수 있는 <a href="https://api.slack.com/web">Web API</a>를 써서 메세지를 보낼 수도 있다. Slackbot Remote Integration과는 다르게 사용자 이름이나 기타 설정등을 변경할 수 있는 등, 세밀한 제어가 필요한 경우 사용하면 되겠다.</p>
 
-<h2>Terminal</h2>
+<p><a href="https://api.slack.com/web">Web API</a> 페이지에서 token을 생성한 다음, <a href="https://api.slack.com/methods/chat.postMessage">메세지 포스팅에 필요한 파라미터</a>를 설정해서 HTTP POST로 전송한다.</p>
 
-<ul>
-<li>sleep: <code>$ sudo shutdown -s now</code></li>
-<li>restart: <code>$ sudo shutdown -r now</code></li>
-<li>shutdown: <code>$ sudo shutdown -h now</code></li>
-</ul>
+<p>채널명은 <code class="highlighter-rouge">#</code>이 붙은 <code class="highlighter-rouge">#channel_name</code> 형태로 지정해야 된다.</p>
 
-<p>나중에 하기</p>
+<p>curl 예제(대문자는 파라미터)</p>
 
-<ul>
-<li>30분 뒤에 shutdown 하기: <code>$ sudo shutdown -h +30</code></li>
-<li>특정 시각(2014/12/23 13:30)에 restart 하기: <code>$ sudo shutdown -r 1412231330</code></li>
-</ul>
-
-<h2>참고</h2>
-
-<ul>
-<li><a href="http://support.apple.com/en-us/HT201236">OS X: Keyboard shortcuts</a></li>
-<li><a href="http://www.maclife.com/article/columns/terminal_101_properly_shutting_down_your_mac">Terminal 101: Properly Shutting Down Your Mac
-</a></li>
-<li><a href="http://macnews.tistory.com/841">[간단한 팁] 맥을 가장 빠르게 재시동∙잠자기∙종료시키는 방법 [OS X 10.9.2 개정판]</a></li>
-</ul>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>curl <span class="nt">-X</span> POST <span class="nt">-d</span> <span class="s2">"token=TOKEN&amp;channel=CHANNEL_NAME&amp;text=CHAT_MESSAGE&amp;username=USERNAME"</span> https://slack.com/api/chat.postMessage
+</code></pre></div></div>
 
   </article>
 

@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>쉘에서 계산하기</title>
+    <title>맥(Mac) 잠자기/재기동/종료 방법 총정리</title>
     <meta name="description" content="저엔트로피를 지향하는 개발자
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://gumpcha.github.io/blog/calculating-in-a-shell">
+    <link rel="canonical" href="http://localhost:4000/blog/mac-sleep-restart-shutdown">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
@@ -54,53 +54,68 @@
         <div class="post">
 
   <header class="post-header">
-    <h1 class="post-title">쉘에서 계산하기</h1>
-    <p class="post-meta">Dec 2, 2014</p>
+    <h1 class="post-title">맥(Mac) 잠자기/재기동/종료 방법 총정리</h1>
+    <p class="post-meta">Dec 23, 2014</p>
   </header>
 
   <article class="post-content">
-    <h1>TL;DR</h1>
-
-<p>정수만 계산하려면 bash만으로 가능하고, 실수까지 계산하려면 <code>bc</code>란 유틸리티를 쓰면 된다.</p>
-
-<h1>정수 계산</h1>
-
-<p>bash 연산자 expr 사용</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>expr <span class="m">1</span> + <span class="m">2</span>        <span class="c"># + 앞 뒤에 빈 칸 필요</span>
-3
-</code></pre></div>
-<p>bash 내장 명령어 let 사용</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">let </span><span class="nv">a</span><span class="o">=</span>1
-<span class="nv">$ </span><span class="nb">echo</span> <span class="nv">$a</span>
-1
-<span class="nv">$ </span><span class="nb">let </span><span class="nv">b</span><span class="o">=</span>a+2
-<span class="nv">$ </span><span class="nb">echo</span> <span class="nv">$b</span>
-3
-</code></pre></div>
-<p>bash 연산자 $((...)) 사용</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ a</span><span class="o">=</span>1
-<span class="nv">$ </span><span class="nb">echo</span> <span class="k">$((</span>a+2<span class="k">))</span>
-3
-</code></pre></div>
-<h1>실수 계산</h1>
-
-<p><code>bc</code>란 유틸리티를 사용. 계산 결과가 0 이하이면 .33 처럼 표시되므로 추가적인 0을 붙여줘야 됨.</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;1/3&quot;</span> <span class="p">|</span> bc
-0
-<span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;1/3&quot;</span> <span class="p">|</span> bc -l
-.33333333333333333333
-<span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;scale=2; 1/3&quot;</span> <span class="p">|</span> bc -l
-.33
-<span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;scale=4; 1/3&quot;</span> <span class="p">|</span> bc -l
-.3333
-<span class="nv">$ </span>bc -l <span class="o">&lt;&lt;&lt;</span> <span class="s2">&quot;scale=2; 1/3&quot;</span>
-.33
-</code></pre></div>
-<h1>참고</h1>
+    <p>크게 다음 네 가지 방법이 가능하다.</p>
 
 <ul>
-<li><a href="https://www.shell-tips.com/2010/06/14/performing-math-calculation-in-bash/">Performing Math calculation in Bash</a></li>
-<li><a href="http://www.tldp.org/LDP/abs/html/arithexp.html">Advanced Bash-Scripting Guide - Chapter 13. Arithmetic Expansion</a></li>
+  <li>시스템 메뉴</li>
+  <li>전역 단축키</li>
+  <li>Alfred</li>
+  <li>Terminal</li>
+</ul>
+
+<h2 id="시스템-메뉴">시스템 메뉴</h2>
+
+<ul>
+  <li>sleep: <i class="fa fa-apple"></i> -&gt; Sleep</li>
+  <li>restart: <i class="fa fa-apple"></i> -&gt; Restart</li>
+  <li>shutdown: <i class="fa fa-apple"></i> -&gt; Shut Down</li>
+</ul>
+
+<h2 id="전역-단축키">전역 단축키</h2>
+
+<ul>
+  <li>sleep: <code class="highlighter-rouge">command</code> + <code class="highlighter-rouge">option</code> + <code class="highlighter-rouge">power</code> 혹은 1.5초간 <code class="highlighter-rouge">power</code></li>
+  <li>display sleep: <code class="highlighter-rouge">shift</code> + <code class="highlighter-rouge">control</code> + <code class="highlighter-rouge">power</code></li>
+  <li>restart: <code class="highlighter-rouge">command</code> + <code class="highlighter-rouge">control</code> + <code class="highlighter-rouge">power</code></li>
+  <li>shutdown: <code class="highlighter-rouge">command</code> + <code class="highlighter-rouge">control</code> + <code class="highlighter-rouge">option</code> + <code class="highlighter-rouge">power</code></li>
+  <li>sleep/restart/shutdown 선택 창: <code class="highlighter-rouge">control</code> + <code class="highlighter-rouge">power</code></li>
+</ul>
+
+<h2 id="alfred">Alfred</h2>
+
+<ul>
+  <li>sleep: sleep</li>
+  <li>restart: restart</li>
+  <li>shutdown: shutdown</li>
+</ul>
+
+<h2 id="terminal">Terminal</h2>
+
+<ul>
+  <li>sleep: <code class="highlighter-rouge">$ sudo shutdown -s now</code></li>
+  <li>restart: <code class="highlighter-rouge">$ sudo shutdown -r now</code></li>
+  <li>shutdown: <code class="highlighter-rouge">$ sudo shutdown -h now</code></li>
+</ul>
+
+<p>나중에 하기</p>
+
+<ul>
+  <li>30분 뒤에 shutdown 하기: <code class="highlighter-rouge">$ sudo shutdown -h +30</code></li>
+  <li>특정 시각(2014/12/23 13:30)에 restart 하기: <code class="highlighter-rouge">$ sudo shutdown -r 1412231330</code></li>
+</ul>
+
+<h2 id="참고">참고</h2>
+
+<ul>
+  <li><a href="http://support.apple.com/en-us/HT201236">OS X: Keyboard shortcuts</a></li>
+  <li><a href="http://www.maclife.com/article/columns/terminal_101_properly_shutting_down_your_mac">Terminal 101: Properly Shutting Down Your Mac
+</a></li>
+  <li><a href="http://macnews.tistory.com/841">[간단한 팁] 맥을 가장 빠르게 재시동∙잠자기∙종료시키는 방법 [OS X 10.9.2 개정판]</a></li>
 </ul>
 
   </article>
