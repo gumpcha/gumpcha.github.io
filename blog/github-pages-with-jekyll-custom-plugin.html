@@ -11,7 +11,7 @@
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://gumpcha.github.io/blog/github-pages-with-jekyll-custom-plugin">
+    <link rel="canonical" href="http://localhost:4000/blog/github-pages-with-jekyll-custom-plugin">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
@@ -59,87 +59,110 @@
   </header>
 
   <article class="post-content">
-    <h2>TL;DR</h2>
+    <h2 id="tldr">TL;DR</h2>
 
 <p><a href="https://pages.github.com/versions/">Github Pages에서 지원하는 Jekyll plugin</a>외의 것을 쓰려면
-최종 html/css/js 파일이 들어가는 <code>_site</code> 디렉토리를 <code>master</code> branch로 변경한다.</p>
+최종 html/css/js 파일이 들어가는 <code class="highlighter-rouge">_site</code> 디렉토리를 <code class="highlighter-rouge">master</code> branch로 변경한다.</p>
 
-<h2>히스토리</h2>
+<h2 id="히스토리">히스토리</h2>
 
 <p>다음 내용은 <a href="https://github.com/gumpcha/gumpcha.github.io/issues/2">블로그 이슈</a>에서 진행된 내용을 정리했다.</p>
 
-<p><a href="http://gumpcha.github.io/blog/mac-sleep-restart-shutdown/">두 번째 블로그</a> 글을 올리고 혹시나 해서 윈도우에서 확인해 보니, 애플 아이콘이 깨져서 안 보인다. 검색해 보니 unicode 문제라고 하고, 웹에 게시할 때는 쓰지 말라고 해서 <code>font-awesome</code>의 애플 아이콘을 적용하면 되겠다 싶었다.</p>
+<p><a href="http://gumpcha.github.io/blog/mac-sleep-restart-shutdown/">두 번째 블로그</a> 글을 올리고 혹시나 해서 윈도우에서 확인해 보니, 애플 아이콘이 깨져서 안 보인다. 검색해 보니 unicode 문제라고 하고, 웹에 게시할 때는 쓰지 말라고 해서 <code class="highlighter-rouge">font-awesome</code>의 애플 아이콘을 적용하면 되겠다 싶었다.</p>
 
 <p><a href="http://ryancmorrissey.com/blog/2014/01/25/font-awesome-icons-jekyll-tag-plugin/">Font Awesome icons Jekyll tag plugin</a>을 설치하고 다음과 같이 수정했다.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">-- sleep: &lt;U+F8FF&gt; -&gt; Sleep
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-- sleep: &lt;U+F8FF&gt; -&gt; Sleep
 -- restart: &lt;U+F8FF&gt; -&gt; Restart
 -- shutdown: &lt;U+F8FF&gt; -&gt; Shut Down
-+- sleep: &lt;i class=&quot;fa fa-apple&quot;&gt;&lt;/i&gt; -&gt; Sleep
-+- restart: &lt;i class=&quot;fa fa-apple&quot;&gt;&lt;/i&gt; -&gt; Restart
-+- shutdown: &lt;i class=&quot;fa fa-apple&quot;&gt;&lt;/i&gt; -&gt; Shut Down
-</code></pre></div>
-<p>local에서 확인하니 잘 나와서 <code>push</code>를 했는데 github에서 메일이 한 통 날라온다.</p>
++- sleep: &lt;i class="fa fa-apple"&gt;&lt;/i&gt; -&gt; Sleep
++- restart: &lt;i class="fa fa-apple"&gt;&lt;/i&gt; -&gt; Restart
++- shutdown: &lt;i class="fa fa-apple"&gt;&lt;/i&gt; -&gt; Shut Down
+</code></pre></div></div>
+
+<p>local에서 확인하니 잘 나와서 <code class="highlighter-rouge">push</code>를 했는데 github에서 메일이 한 통 날라온다.</p>
 
 <blockquote>
-<p>The page build failed with the following error:</p>
+  <p>The page build failed with the following error:</p>
 
-<p>The tag <code>icon</code> in <code>_posts/2014-12-23-mac-sleep-restart-shutdown.md</code> is not a recognized Liquid tag. For more information, see <a href="https://help.github.com/articles/page-build-failed-unknown-tag-error">https://help.github.com/articles/page-build-failed-unknown-tag-error</a>.</p>
+  <p>The tag <code class="highlighter-rouge">icon</code> in <code class="highlighter-rouge">_posts/2014-12-23-mac-sleep-restart-shutdown.md</code> is not a recognized Liquid tag. For more information, see https://help.github.com/articles/page-build-failed-unknown-tag-error.</p>
 </blockquote>
 
-<p>github pages는 새로 push가 되면 보안 문제 때문에 <code>--safe</code> 모드로 jekyll processing을 하기 때문에 github가 제공하는 plugin이 아니면 liquid tag를 인식하지 못 하는 문제이다.</p>
+<p>github pages는 새로 push가 되면 보안 문제 때문에 <code class="highlighter-rouge">--safe</code> 모드로 jekyll processing을 하기 때문에 github가 제공하는 plugin이 아니면 liquid tag를 인식하지 못 하는 문제이다.</p>
 
-<p>해결 방법을 말로 설명하면, 로컬에서 <code>jekyll build</code>나 <code>jekyll serve</code>를 해서 <code>_site</code> 디렉토리에 최종 html/css/js 파일을 생성한 다음 push를 해야 되는 상황.</p>
+<p>해결 방법을 말로 설명하면, 로컬에서 <code class="highlighter-rouge">jekyll build</code>나 <code class="highlighter-rouge">jekyll serve</code>를 해서 <code class="highlighter-rouge">_site</code> 디렉토리에 최종 html/css/js 파일을 생성한 다음 push를 해야 되는 상황.</p>
 
 <p>기술적인 해결법은 sources 브랜치에서 편집/작성한 글을 _site 디렉토리에 생성한 다음 _site 디렉토리를 master 브랜치로 설정하면 된다.</p>
 
-<h2>사전 작업</h2>
+<h2 id="사전-작업">사전 작업</h2>
 
 <ol>
-<li><p><code>.gitignore</code>에서 _site 삭제하고 _site 전체를 <code>git add</code></p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">(</span>master<span class="o">)</span><span class="nv">$ </span>vi .gitignore
-... delete _site
-<span class="o">(</span>master<span class="o">)</span><span class="nv">$ </span>git add .gitignore _site
-<span class="o">(</span>master<span class="o">)</span><span class="nv">$ </span>git ci -m <span class="s1">&#39;Prepare source/master branch for custom jekyll plugin&#39;</span>
-</code></pre></div></li>
-<li><p>source branch를 생성하고 기존의 master와 함께 push</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">(</span>master<span class="o">)</span><span class="nv">$ </span>git checkout -b <span class="nb">source</span>
-<span class="o">(</span><span class="nb">source</span><span class="o">)</span><span class="nv">$ </span>git push --all
-</code></pre></div></li>
-<li><p>웹으로 github 저장소 <code>Settings</code> 메뉴로 들어가 Default branch를 source로 변경</p></li>
-<li><p>local에서 remote 저장소의 default branch 적용</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">(</span><span class="nb">source</span><span class="o">)</span><span class="nv">$ </span>git remote <span class="nb">set</span>-head origin -a
-</code></pre></div></li>
-<li><p>local/remote의 master branch 모두 삭제</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git push origin :master
-<span class="nv">$ </span>git branch -d master
-</code></pre></div></li>
+  <li>
+    <p><code class="highlighter-rouge">.gitignore</code>에서 _site 삭제하고 _site 전체를 <code class="highlighter-rouge">git add</code></p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">(</span>master<span class="o">)</span><span class="nv">$ </span>vi .gitignore
+ ... delete _site
+ <span class="o">(</span>master<span class="o">)</span><span class="nv">$ </span>git add .gitignore _site
+ <span class="o">(</span>master<span class="o">)</span><span class="nv">$ </span>git ci <span class="nt">-m</span> <span class="s1">'Prepare source/master branch for custom jekyll plugin'</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>source branch를 생성하고 기존의 master와 함께 push</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">(</span>master<span class="o">)</span><span class="nv">$ </span>git checkout <span class="nt">-b</span> <span class="nb">source</span>
+ <span class="o">(</span><span class="nb">source</span><span class="o">)</span><span class="nv">$ </span>git push <span class="nt">--all</span>
+</code></pre></div>    </div>
+  </li>
+  <li>웹으로 github 저장소 <code class="highlighter-rouge">Settings</code> 메뉴로 들어가 Default branch를 source로 변경</li>
+  <li>
+    <p>local에서 remote 저장소의 default branch 적용</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">(</span><span class="nb">source</span><span class="o">)</span><span class="nv">$ </span>git remote set-head origin <span class="nt">-a</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>local/remote의 master branch 모두 삭제</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nv">$ </span>git push origin :master
+ <span class="nv">$ </span>git branch <span class="nt">-d</span> master
+</code></pre></div>    </div>
+  </li>
 </ol>
 
-<h2>최종 Workflow</h2>
+<h2 id="최종-workflow">최종 Workflow</h2>
 
 <ol>
-<li><code>source</code> branch에서 새 글을 작성하거나, 사이트 내용 변경</li>
-<li><code>jekyll serve</code>로 내용 확인</li>
-<li><p>추가/변경된 내용 commit</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">(</span><span class="nb">source</span><span class="o">)</span><span class="nv">$ </span>git commit -am <span class="s1">&#39;Add new post&#39;</span>
-</code></pre></div></li>
-<li><p>_site를 master branch로 재적용. 사전 준비가 끝나고 나서 처음 push할 때는 local에 master가 없으므로 <code>git branch -d master</code>는 건너뜀</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">(</span><span class="nb">source</span><span class="o">)</span><span class="nv">$ </span>git branch -D master
-<span class="o">(</span><span class="nb">source</span><span class="o">)</span><span class="nv">$ </span>git checkout -b master
-<span class="o">(</span>master<span class="o">)</span><span class="nv">$ </span>git filter-branch --subdirectory-filter _site/ -f
-</code></pre></div></li>
-<li><p>source/master branch 모두 push</p>
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">(</span>master<span class="o">)</span><span class="nv">$ </span>git push --all
-</code></pre></div></li>
+  <li><code class="highlighter-rouge">source</code> branch에서 새 글을 작성하거나, 사이트 내용 변경</li>
+  <li><code class="highlighter-rouge">jekyll serve</code>로 내용 확인</li>
+  <li>
+    <p>추가/변경된 내용 commit</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">(</span><span class="nb">source</span><span class="o">)</span><span class="nv">$ </span>git commit <span class="nt">-am</span> <span class="s1">'Add new post'</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>_site를 master branch로 재적용. 사전 준비가 끝나고 나서 처음 push할 때는 local에 master가 없으므로 <code class="highlighter-rouge">git branch -d master</code>는 건너뜀</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">(</span><span class="nb">source</span><span class="o">)</span><span class="nv">$ </span>git branch <span class="nt">-D</span> master
+ <span class="o">(</span><span class="nb">source</span><span class="o">)</span><span class="nv">$ </span>git checkout <span class="nt">-b</span> master
+ <span class="o">(</span>master<span class="o">)</span><span class="nv">$ </span>git filter-branch <span class="nt">--subdirectory-filter</span> _site/ <span class="nt">-f</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>source/master branch 모두 push</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">(</span>master<span class="o">)</span><span class="nv">$ </span>git push <span class="nt">--all</span>
+</code></pre></div>    </div>
+  </li>
 </ol>
 
 <p>위 Workflow에서 사용하는 여러 명령어들은 git alias나 <a href="https://github.com/gumpcha/gumpcha.github.io/commit/b487e1bc507981f3b1af210463031cd678bacc4e">간단한 쉘 스크립트</a>, <a href="http://james-oldfield.co/blog/jekyll-plugins-with-gh-pages/">grunt task</a>, travis-ci 등을 이용해 한 번에 적용할 수 있다.</p>
 
-<h2>참고</h2>
+<h2 id="참고">참고</h2>
 
 <ul>
-<li><a href="http://davidensinger.com/2013/04/deploying-jekyll-to-github-pages/">http://davidensinger.com/2013/04/deploying-jekyll-to-github-pages/</a></li>
-<li><a href="http://drewsilcock.co.uk/custom-jekyll-plugins/">http://drewsilcock.co.uk/custom-jekyll-plugins/</a></li>
+  <li>http://davidensinger.com/2013/04/deploying-jekyll-to-github-pages/</li>
+  <li>http://drewsilcock.co.uk/custom-jekyll-plugins/</li>
 </ul>
 
   </article>

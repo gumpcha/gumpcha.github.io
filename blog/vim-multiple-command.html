@@ -11,7 +11,7 @@
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://gumpcha.github.io/blog/vim-multiple-command">
+    <link rel="canonical" href="http://localhost:4000/blog/vim-multiple-command">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
@@ -59,11 +59,13 @@
   </header>
 
   <article class="post-content">
-    <p><code>|</code>를 쓰면 된다.</p>
+    <p><code class="highlighter-rouge">|</code>를 쓰면 된다.</p>
 
 <p>예를 들어, 전체 내용 중 one을 ONE으로 바꾸고, two를 TWO로 바꾸고, 빈 줄을 지우려면</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">:%s/one/ONE/g | %s/two/TWO/g | g/^$/d
-</code></pre></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>:%s/one/ONE/g | %s/two/TWO/g | g/^$/d
+</code></pre></div></div>
+
 <p>라고 하면 된다.</p>
 
   </article>
